@@ -1,0 +1,54 @@
+AllCops:
+  TargetRubyVersion: 2.5
+  DisabledByDefault: true
+
+Metrics/LineLength:
+  Enabled: true
+  Max: 120
+
+Style/HashSyntax:
+  Enabled: true
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: single_quotes
+
+Style/MultilineIfThen:
+  Enabled: true
+
+Style/MethodDefParentheses:
+  Enabled: true
+
+Style/BracesAroundHashParameters:
+  Enabled: true
+
+Layout/IndentationWidth:
+  Enabled: true
+
+Layout/Tab:
+  Enabled: true
+
+Layout/EmptyLines:
+  Enabled: true
+
+Layout/TrailingBlankLines:
+  Enabled: true
+
+Layout/TrailingWhitespace:
+  Enabled: true
+
+Layout/SpaceBeforeBlockBraces:
+  Enabled: true
+
+Layout/SpaceInsideBlockBraces:
+  Enabled: true
+
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: true
+
+Layout/CaseIndentation:
+  Enabled: true
+
+Lint/EndAlignment:
+  Enabled: true
+  EnforcedStyleAlignWith: variable

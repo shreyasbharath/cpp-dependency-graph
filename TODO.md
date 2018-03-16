@@ -1,0 +1,5 @@
+  - Allow user to specify a single component and the tool should print only that component
+  - Switch to detect cyclic dependencies (cyclic dependencies highlighted in rendered file)
+  - Highlight strongly coupled components (i.e. have lots of outgoing/incoming dependencies)
+  - Provide coupling/cohesion metrics (https://softwareengineering.stackexchange.com/questions/151004/are-there-metrics-for-cohesion-and-coupling)
+  - should work with any type of include (relative, absolute or just the filenames)
