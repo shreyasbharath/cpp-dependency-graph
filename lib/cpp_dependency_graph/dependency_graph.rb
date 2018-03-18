@@ -18,9 +18,11 @@ class DependencyGraph
   def scan_component_dependencies
     dependencies = TsortableHash.new
     @project.source_components.each do |component|
-      dependencies[component.name] = scan_dependencies(component)
+      dependencies[component.name] = scan_dependencies(component).reject(&:empty?)
     end
-    dependencies.tsort
+    puts dependencies
+    dependencies
+    # dependencies.tsort      # Topological sort, does not wok with cyclic dependencies (throws an exception)
   end
 
   def scan_dependencies(component)
@@ -29,6 +31,7 @@ class DependencyGraph
 
   def component_for_include(include)
     source_file = @project.source_files.find { |file| file.basename == include }
-    source_file.parent_component
+    return source_file.parent_component unless source_file.nil?
+    ''
   end
 end

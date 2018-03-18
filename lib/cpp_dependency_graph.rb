@@ -8,7 +8,7 @@ require_relative 'cpp_dependency_graph/graph_to_dot_converter'
 module CppDependencyGraph
   def generate(project_dir, output_file)
     project = Project.new(project_dir)
-    dependency_scanner = DependencyGraph.new(project)
-    GraphToDotConverter.generate(dependency_scanner.component_dependencies, output_file)
+    graph = DependencyGraph.new(project)
+    GraphToDotConverter.generate(graph.component_dependencies, output_file)
   end
 end

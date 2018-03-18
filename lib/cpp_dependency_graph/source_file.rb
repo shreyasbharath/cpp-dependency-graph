@@ -24,10 +24,6 @@ class SourceFile
     @parent_component ||= File.dirname(@path).split('/').last
   end
 
-  def to_s
-    puts "#{basename} is part of #{parent_component}. Includes are #{all_includes}"
-  end
-
   private
 
   def all_includes
