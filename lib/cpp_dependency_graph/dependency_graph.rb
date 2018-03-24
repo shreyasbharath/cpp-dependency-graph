@@ -3,51 +3,52 @@
 require_relative 'project'
 require_relative 'tsortable_hash'
 
-# Returns a hash of component dependencies
+# Returns a hash of component links
 class DependencyGraph
   def initialize(project)
     @project = project
   end
 
-  def all_component_dependencies
-    @overall_dependencies ||= scan_all_component_dependencies
+  def components
+    @components ||= source_components
   end
 
-  def component_dependencies(name)
-    incoming_depenencies(name).merge(outgoing_dependencies(name))
+  def all_component_links
+    @all_component_links ||= build_hash_component_links
+  end
+
+  def component_links(name)
+    return {} unless all_component_links.key?(name)
+    component_label = all_component_links[name].label
+    component_links = incoming_links(component_label).merge(outgoing_links(name))
+    component_links
   end
 
   private
 
-  def scan_all_component_dependencies
-    dependencies = TsortableHash.new
-    @project.source_components.each do |component|
-      dependencies[component.name.downcase] = scan_dependencies(component).reject(&:empty?)
+  def build_hash_component_links
+    component_links = @project.source_components.map do |component|
+                        value = OpenStruct.new
+                        value.label = component.name
+                        value.dependencies = @project.dependencies(component)
+                        [component.name.downcase, value]
+                      end.to_h
+    component_links
+  end
+
+  def outgoing_links(name)
+    all_component_links.slice(name)
+  end
+
+  def incoming_links(label)
+    incoming_components = all_component_links.select do |component, value|
+      value.dependencies.any? { |dep| dep == label }
     end
-    dependencies
-    # dependencies.tsort      # Topological sort, does not work with cyclic dependencies (throws an exception)
-  end
-
-  def scan_dependencies(component)
-    deps = component.outgoing_includes.map { |include| component_for_include(include) }
-    Set.new(deps)
-  end
-
-  def outgoing_dependencies(name)
-    return [] if all_component_dependencies[name].nil?
-    all_component_dependencies.slice(name)
-  end
-
-  def incoming_depenencies(name)
-    incoming_components = all_component_dependencies.select do |component, deps|
-      deps.any? { |dep| dep.casecmp(name) == 0 }
-    end
-    incoming_components.keys.map { |dep| [dep, [name]] }.to_h
-  end
-
-  def component_for_include(include)
-    source_file = @project.source_files.find { |file| file.basename == include }
-    return source_file.parent_component unless source_file.nil?
-    ''
+    incoming_components.map do |component, value|
+      deps = OpenStruct.new
+      deps.label = value.label
+      deps.dependencies = [label]
+      [component, deps]
+    end.to_h
   end
 end

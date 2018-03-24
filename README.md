@@ -2,6 +2,10 @@
 
 [![Build Status](https://travis-ci.org/shreyasbharath/cpp_dependency_graph.svg?branch=master)](https://travis-ci.org/shreyasbharath/cpp_dependency_graph)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/2a07b587ca6fc8b1b3db/maintainability)](https://codeclimate.com/github/shreyasbharath/cpp_dependency_graph/maintainability)
+
+[![Test Coverage](https://api.codeclimate.com/v1/badges/2a07b587ca6fc8b1b3db/test_coverage)](https://codeclimate.com/github/shreyasbharath/cpp_dependency_graph/test_coverage)
+
 Generates useful dependency graphs to study the architecture of a C/C++ codebase.
 
 Why do all the other languages have awesome tools to analyse codebases but C/C++ codebases do not?

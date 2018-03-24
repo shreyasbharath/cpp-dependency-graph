@@ -25,8 +25,11 @@ Gem::Specification.new do |s|
   s.executables = s.files.grep(%r{^exe/}) { |f| File.basename(f) }
   s.require_paths = ['lib']
 
-  s.required_ruby_version = Gem::Requirement.new('>= 2.0.0')
-  s.rubygems_version = '2.6.14'
+  s.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
+  s.rubygems_version = '2.7.6'
+
+  s.add_runtime_dependency 'parallel', '~> 1.12'
+  s.add_runtime_dependency 'json', '~> 2.1'
 
   s.add_development_dependency 'bundler', '~> 1.16'
   s.add_development_dependency 'coveralls', '~> 0.8'

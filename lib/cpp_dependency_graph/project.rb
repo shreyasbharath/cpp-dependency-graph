@@ -14,8 +14,9 @@ class Project
     @source_components ||= build_source_components
   end
 
-  def source_files
-    @source_files ||= source_components.flat_map(&:source_files)
+  def dependencies(component)
+    deps = component.outgoing_includes.map { |include| component_for_include(include) }.reject(&:empty?)
+    Set.new(deps)
   end
 
   private
@@ -23,6 +24,16 @@ class Project
   def build_source_components
     dirs = fetch_all_dirs(@path)
     dirs.map { |dir| SourceComponent.new(dir) }
+  end
+
+  def component_for_include(include)
+    source_file = source_files.find { |file| file.basename == include }
+    return source_file.parent_component unless source_file.nil?
+    ''
+  end
+
+  def source_files
+    @source_files ||= source_components.flat_map(&:source_files)
   end
 
   # def fetch_immediate_sub_dirs(source_dir)

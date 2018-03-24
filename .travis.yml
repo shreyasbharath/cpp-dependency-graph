@@ -18,3 +18,21 @@ jobs:
       script: bundle exec rake rubocop
     - stage: test
       script: bundle exec rake spec
+    - stage: build
+      script: bundle exec rake build
+    - stage: GitHub Release
+      script: echo "Deploying to GitHub releases ..."
+      deploy:
+        provider: releases
+        api_key: $GITHUB_OAUTH_TOKEN
+        skip_cleanup: true
+        on:
+          tags: true
+    # - stage: gem release
+    #   rvm: 2.5
+    #   script: echo "Deploying to rubygems.org ..."
+    #   deploy:
+    #     provider: rubygems
+    #     gem: cpp_dependency_graph
+    #     api_key: $RUBYGEMS_API_KEY
+    #     on: deploy-gem-release

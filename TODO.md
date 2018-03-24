@@ -6,10 +6,12 @@
 - Allow user to specify a single component and the tool should print only that component
 - Switch to detect cyclic dependencies (cyclic dependencies highlighted in rendered file)
 - Work with any sort of project structure? Or should this tool recommend an ideal project structure for optimal results?
-- Highlight strongly coupled components (i.e. have lots of outgoing/incoming dependencies)
+- Highlight strongly coupled components (i.e. have lots of outgoing/incoming dependencies). How to visualise strongly coupled components?
 - Provide coupling/cohesion metrics, lookup metrics from Clean Architecture and [this](https://softwareengineering.stackexchange.com/questions/151004/are-there-metrics-for-cohesion-and-coupling)
 - should work with any type of include (relative, absolute or just the filenames)
 - <system> include vs "project" include (how will this work for third party sources that are not part of the codebase?)
 - support prefixes to figure out components?
 - support case sensitive component names or not?
 - support for a giant `public` include dir where public headers of all components are housed
+- look at 3D visualisation using something like https://github.com/ggeoffrey/cljs-gravity
+- Node size - base it on how many source files (or lines of code)

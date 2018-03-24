@@ -37,7 +37,7 @@ optparse = OptionParser.new do |opts|
   end
 
   opts.on('-c component', '--component', 'component to analyse and generate graph for') do |name|
-    options.component = name
+    options.component = name.downcase
   end
 
   opts.on('-o file', '--output_file', 'output dot file to be generated') do |file|
