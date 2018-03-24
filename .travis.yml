@@ -1,18 +1,20 @@
 language: ruby
+dist: trusty
+cache: bundler
 sudo: false
 rvm:
-  - 2.3
-  - 2.4
   - 2.5
 before_install:
-  - gem update bundler
+  - gem update --system
+  - gem update --remote bundler
+  - gem --version
+  - bundle --version
 branches:
   only:
     - master
 jobs:
   include:
     - stage: test
-      rvm: 2.5
-      before_script: bundle install
       script: bundle exec rake rubocop
-    - sript: bundle exec rake spec
+    - stage: test
+      script: bundle exec rake spec

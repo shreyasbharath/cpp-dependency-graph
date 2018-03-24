@@ -8,4 +8,18 @@ Why do all the other languages have awesome tools to analyse codebases but C/C++
 
 It's time to change that.
 
-This gem is inspired by http://www.emadelsaid.com/rubrowser/ and https://github.com/tomtom-international/cpp-dependencies
+This tool aims to
+  -
+
+
+This tool is inspired by [rubrowser](http://www.emadelsaid.com/rubrowser/) and [cpp-dependencies][https://github.com/tomtom-international/cpp-dependencies].
+
+## Usage
+
+### Overall dependency graph
+
+### Individual component graph
+
+## Development
+
+`bundle exec cpp_dependency_graph -r <dir> -c <component_name> -o <output_file>`

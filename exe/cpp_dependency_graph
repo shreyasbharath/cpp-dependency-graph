@@ -32,15 +32,15 @@ options = OpenStruct.new
 optparse = OptionParser.new do |opts|
   opts.banner = 'Usage: cpp_dependency_graph [options]'
 
-  opts.on('-r dir', '--root dir', 'top level root directory of C/C++ project') do |dir|
+  opts.on('-r dir', '--root_dir', 'top level root directory of C/C++ project') do |dir|
     options.project_dir = dir.gsub(/\\+/, '/')
   end
 
-  opts.on('-c component', '--component', 'component to analyse and generate graph for') do |component|
-    options.component = component
+  opts.on('-c component', '--component', 'component to analyse and generate graph for') do |name|
+    options.component = name
   end
 
-  opts.on('-o file', '--output file', 'output dot file to be generated') do |file|
+  opts.on('-o file', '--output_file', 'output dot file to be generated') do |file|
     options.output_file = file
   end
 

@@ -9,6 +9,7 @@ module CppDependencyGraph
   def generate(args)
     project = Project.new(args.project_dir)
     graph = DependencyGraph.new(project)
-    GraphToDotConverter.generate(graph.component_dependencies, args.output_file)
+    deps = args[:component].nil? ? graph.all_component_dependencies : graph.component_dependencies(args.component)
+    GraphToDotConverter.generate(deps, args.output_file)
   end
 end

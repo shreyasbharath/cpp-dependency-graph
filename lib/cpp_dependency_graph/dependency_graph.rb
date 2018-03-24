@@ -9,24 +9,40 @@ class DependencyGraph
     @project = project
   end
 
-  def component_dependencies
-    @component_dependencies ||= scan_component_dependencies
+  def all_component_dependencies
+    @overall_dependencies ||= scan_all_component_dependencies
+  end
+
+  def component_dependencies(name)
+    incoming_depenencies(name).merge(outgoing_dependencies(name))
   end
 
   private
 
-  def scan_component_dependencies
+  def scan_all_component_dependencies
     dependencies = TsortableHash.new
     @project.source_components.each do |component|
-      dependencies[component.name] = scan_dependencies(component).reject(&:empty?)
+      dependencies[component.name.downcase] = scan_dependencies(component).reject(&:empty?)
     end
-    puts dependencies
     dependencies
-    # dependencies.tsort      # Topological sort, does not wok with cyclic dependencies (throws an exception)
+    # dependencies.tsort      # Topological sort, does not work with cyclic dependencies (throws an exception)
   end
 
   def scan_dependencies(component)
-    component.outgoing_includes.map { |include| component_for_include(include) }.uniq
+    deps = component.outgoing_includes.map { |include| component_for_include(include) }
+    Set.new(deps)
+  end
+
+  def outgoing_dependencies(name)
+    return [] if all_component_dependencies[name].nil?
+    all_component_dependencies.slice(name)
+  end
+
+  def incoming_depenencies(name)
+    incoming_components = all_component_dependencies.select do |component, deps|
+      deps.any? { |dep| dep.casecmp(name) == 0 }
+    end
+    incoming_components.keys.map { |dep| [dep, [name]] }.to_h
   end
 
   def component_for_include(include)
