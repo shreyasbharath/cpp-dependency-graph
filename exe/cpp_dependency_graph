@@ -23,20 +23,25 @@
 #++
 
 require 'optparse'
+require 'ostruct'
 require 'cpp_dependency_graph'
 
 include CppDependencyGraph
 
-options = {}
+options = OpenStruct.new
 optparse = OptionParser.new do |opts|
   opts.banner = 'Usage: cpp_dependency_graph [options]'
 
   opts.on('-r dir', '--root dir', 'top level root directory of C/C++ project') do |dir|
-    options[:root_dir] = dir.gsub(/\\+/, '/')
+    options.project_dir = dir.gsub(/\\+/, '/')
+  end
+
+  opts.on('-c component', '--component', 'component to analyse and generate graph for') do |component|
+    options.component = component
   end
 
   opts.on('-o file', '--output file', 'output dot file to be generated') do |file|
-    options[:output_file] = file
+    options.output_file = file
   end
 
   opts.on('-h', '--help', 'Prints this help') do
@@ -47,7 +52,7 @@ end
 
 begin
   optparse.parse!
-  mandatory = [:root_dir, :output_file]
+  mandatory = [:project_dir, :output_file]
   missing = mandatory.select { |param| options[param].nil? }
   raise OptionParser::MissingArgument.new(missing.join(', ')) unless missing.empty?
 rescue OptionParser::InvalidOption, OptionParser::MissingArgument
@@ -56,9 +61,9 @@ rescue OptionParser::InvalidOption, OptionParser::MissingArgument
   exit
 end
 
-unless File.directory?(options[:root_dir])
-  puts('Not a valid source directory')
-  sys.exit(-1)
+unless File.directory?(options.project_dir)
+  puts('Not a valid project source directory')
+  Kernel.exit(1)
 end
 
-generate(options[:root_dir], options[:output_file])
+generate(options)
