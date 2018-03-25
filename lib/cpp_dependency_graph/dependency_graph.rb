@@ -20,8 +20,7 @@ class DependencyGraph
   def component_links(name)
     return {} unless all_component_links.key?(name)
     component_label = all_component_links[name].label
-    component_links = incoming_links(component_label).merge(outgoing_links(name))
-    component_links
+    incoming_links(component_label).merge(outgoing_links(name))
   end
 
   private

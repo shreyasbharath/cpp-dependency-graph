@@ -15,8 +15,16 @@ class SourceComponent
     @source_files ||= parse_source_files('.{h,hpp,hxx,c,cpp,cxx,cc}')
   end
 
+  def num_source_files
+    @num_source_files ||= source_files.size
+  end
+
   def outgoing_includes
     @outgoing_includes ||= scan_outgoing_includes
+  end
+
+  def loc
+    @loc ||= source_files.inject(0) { |total_loc, file| total_loc + file.loc }
   end
 
   private

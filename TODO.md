@@ -15,3 +15,5 @@
 - support for a giant `public` include dir where public headers of all components are housed
 - look at 3D visualisation using something like https://github.com/ggeoffrey/cljs-gravity
 - Node size - base it on how many source files (or lines of code)
+- Ignore list? Some components may not want to be seen
+- Use a yaml config file? A pain to pass a whole heap of arguments every time
