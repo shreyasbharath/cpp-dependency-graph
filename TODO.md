@@ -17,3 +17,4 @@
 - Node size - base it on how many source files (or lines of code)
 - Ignore list? Some components may not want to be seen
 - Use a yaml config file? A pain to pass a whole heap of arguments every time
+- Make the tool incremental? Only generate parts of the new graph if something has changed. Something to think about

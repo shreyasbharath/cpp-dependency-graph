@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
   s.rubygems_version = '2.7.6'
 
+  s.add_runtime_dependency 'docopt', '~> 0.6'
   s.add_runtime_dependency 'parallel', '~> 1.12'
   s.add_runtime_dependency 'json', '~> 2.1'
 

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'project'
-require_relative 'tsortable_hash'
 
 # Returns a hash of component links
 class DependencyGraph

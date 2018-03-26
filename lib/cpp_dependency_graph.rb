@@ -6,18 +6,39 @@ require_relative 'cpp_dependency_graph/graph_visualiser'
 
 # Generate dependency graph of a project as a dot file
 module CppDependencyGraph
-  def generate(args)
-    project = Project.new(args.project_dir)
+  def generate_project_graph(project_dir, output_file)
+    project = Project.new(project_dir)
     graph = DependencyGraph.new(project)
-    deps = args[:component].nil? ? graph.all_component_links : graph.component_links(args.component)
+    deps = graph.all_component_links
     links = deps.flat_map do |node, value|
-              value.dependencies.map do |dep|
-                temp = OpenStruct.new
-                temp.source = value.label
-                temp.target = dep
-                temp
-              end
-            end
-    GraphVisualiser.generate_dot_file(deps.keys, links, args.output_file)
+      value.dependencies.map do |dep|
+        temp = OpenStruct.new
+        temp.source = value.label
+        temp.target = dep
+        temp
+      end
+    end
+    GraphVisualiser.generate_dot_file(deps.keys, links, output_file)
+  end
+
+  def generate_component_graph(project_dir, component, output_file)
+    project = Project.new(project_dir)
+    graph = DependencyGraph.new(project)
+    deps = graph.component_links(component)
+    links = deps.flat_map do |node, value|
+      value.dependencies.map do |dep|
+        temp = OpenStruct.new
+        temp.source = value.label
+        temp.target = dep
+        temp
+      end
+    end
+    GraphVisualiser.generate_dot_file(deps.keys, links, output_file)
+  end
+
+  def generate_component_class_graph(project_dir, component, output_file)
+    project = Project.new(project_dir)
+    graph = DependencyGraph.new(project)
+    # TODO: Implement
   end
 end
