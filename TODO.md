@@ -18,3 +18,4 @@
 - Ignore list? Some components may not want to be seen
 - Use a yaml config file? A pain to pass a whole heap of arguments every time
 - Make the tool incremental? Only generate parts of the new graph if something has changed. Something to think about
+- relative includes ('blah.h') vs absolute includes ('/path/blah.h') vs relative with path includes ('blah/blah.h')

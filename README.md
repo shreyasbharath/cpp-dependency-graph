@@ -27,3 +27,13 @@ This tool is inspired by [rubrowser](http://www.emadelsaid.com/rubrowser/) and [
 ## Development
 
 `bundle exec cpp_dependency_graph -r <dir> -c <component_name> -o <output_file>`
+
+## License
+
+cpp_dependency_graph is available under the MIT license.
+
+## Warranty
+
+This software is provided "as is" and without any express or implied
+warranties, including, without limitation, the implied warranties of
+merchantability and fitness for a particular purpose.

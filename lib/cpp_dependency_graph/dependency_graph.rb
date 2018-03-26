@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'component_link'
 require_relative 'project'
 
 # Returns a hash of component links
@@ -26,10 +27,9 @@ class DependencyGraph
 
   def build_hash_component_links
     component_links = @project.source_components.map do |component|
-                        value = OpenStruct.new
-                        value.label = component.name
-                        value.dependencies = @project.dependencies(component)
-                        [component.name.downcase, value]
+                        key = component.name.downcase
+                        value = ComponentLink.new(component.name, @project.dependencies(component))
+                        [key, value]
                       end.to_h
     component_links
   end
@@ -40,13 +40,12 @@ class DependencyGraph
 
   def incoming_links(label)
     incoming_components = all_component_links.select do |component, value|
-      value.dependencies.any? { |dep| dep == label }
+      value.links.any? { |dep| dep == label }
     end
-    incoming_components.map do |component, value|
-      deps = OpenStruct.new
-      deps.label = value.label
-      deps.dependencies = [label]
-      [component, deps]
+    incoming_components.map do |component, dep|
+      key = component
+      value = ComponentLink.new(dep.label, [label])
+      [key, value]
     end.to_h
   end
 end

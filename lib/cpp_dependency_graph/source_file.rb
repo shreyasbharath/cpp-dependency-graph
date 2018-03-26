@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'pathname'
-
 # Source file and metadata
 class SourceFile
   def initialize(file)
@@ -21,11 +19,7 @@ class SourceFile
   end
 
   def includes
-    @includes ||= filter_self_includes(all_includes)
-  end
-
-  def num_includes
-    @num_includes ||= includes.size
+    @includes ||= all_includes
   end
 
   def loc
@@ -38,12 +32,8 @@ class SourceFile
     @all_includes ||= scan_includes
   end
 
-  def filter_self_includes(includes)
-    includes.reject { |include| Pathname(include).sub_ext('') == Pathname(basename).sub_ext('') }
-  end
-
   def scan_includes
-    file_contents.scan(/#include "([^"]+)"/).uniq.flatten
+    file_contents.scan(/#include "([^"]+)"/).uniq.flatten   # TODO: scan <include> too
   end
 
   def file_contents
