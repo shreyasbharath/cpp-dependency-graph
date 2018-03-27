@@ -29,14 +29,15 @@ Gem::Specification.new do |s|
   s.rubygems_version = '2.7.6'
 
   s.add_runtime_dependency 'docopt', '~> 0.6'
-  s.add_runtime_dependency 'parallel', '~> 1.12'
+  s.add_runtime_dependency 'graphviz', '~> 1.0'
   s.add_runtime_dependency 'json', '~> 2.1'
+  s.add_runtime_dependency 'parallel', '~> 1.12'
 
   s.add_development_dependency 'bundler', '~> 1.16'
   s.add_development_dependency 'coveralls', '~> 0.8'
+  s.add_development_dependency 'debase', '~> 0.2'
   s.add_development_dependency 'rake', '~> 12.3'
   s.add_development_dependency 'rspec', '~> 3.7'
   s.add_development_dependency 'rubocop', '~> 0.54'
   s.add_development_dependency 'ruby-debug-ide', '~> 0.6'
-  s.add_development_dependency 'debase', '~> 0.2'
 end

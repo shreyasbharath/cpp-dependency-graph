@@ -59,7 +59,7 @@ begin
 
   options = OpenStruct.new
   options.project_dir = args['--root_dir'].gsub(/\\/,'/')
-  options.component = args['--component'].downcase
+  options.component = args['--component']&.downcase
   options.class_diagram = args['--class']
   options.output_file = args['--output_file']
 
