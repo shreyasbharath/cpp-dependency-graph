@@ -16,9 +16,9 @@ RSpec.describe SourceFile do
     expect(source_file.parent_component).to eq('Engine')
   end
 
-  it 'has an includes attribute that contains all includes except itself' do
+  it 'has an includes attribute that contains all includes' do
     source_file = SourceFile.new('spec/test/example_project/Engine/Engine.cpp')
-    expect(source_file.includes).to eq(['DataAccess/DA.h'])
+    expect(source_file.includes).to eq(['DataAccess/DA.h', 'Engine.h'])
   end
 
   it 'has a loc (lines of code) attribute' do

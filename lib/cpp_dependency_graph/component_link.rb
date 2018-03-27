@@ -13,4 +13,8 @@ class ComponentLink
   def links
     @links
   end
+
+  def to_s
+    @links.to_a.to_s
+  end
 end
