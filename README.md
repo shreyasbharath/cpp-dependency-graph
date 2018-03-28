@@ -11,16 +11,18 @@ Why do all the other languages have awesome tools to analyse codebases but C/C++
 It's time to change that.
 
 This tool aims to
-  -
+  - provide multiple views into the architecture of a codebase
+  - generate views at multiple levels of the architecture
 
-
-This tool is inspired by [rubrowser](http://www.emadelsaid.com/rubrowser/) and [cpp-dependencies][https://github.com/tomtom-international/cpp-dependencies].
+This tool is inspired by [rubrowser](http://www.emadelsaid.com/rubrowser/) and [cpp-dependencies](https://github.com/tomtom-international/cpp-dependencies).
 
 ## Usage
 
 ### Overall dependency graph
 
 ### Individual component graph
+
+### Component class/file topology graph
 
 ## Development
 

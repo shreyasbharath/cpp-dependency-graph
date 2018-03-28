@@ -18,6 +18,7 @@ module CppDependencyGraph
     graph = DependencyGraph.new(project)
     deps = graph.component_links(component)
     GraphVisualiser.generate_dot_file(deps, output_file)
+    GraphVisualiser.generate_html_file(deps, output_file)
   end
 
   def generate_component_class_graph(project_dir, component, output_file)

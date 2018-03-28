@@ -1,5 +1,6 @@
 # Questions
 
+- Use a compiler to get the includes for a file rather than manually scanning the contents
 - Parallelise dependency scanning as much as possible to get the best possible performance
 - Print out dependency graphs for all components by default if no single component is specified
 - Open up the graph automatically after generating an individual graph?
@@ -20,3 +21,4 @@
 - Make the tool incremental? Only generate parts of the new graph if something has changed. Something to think about
 - relative includes ('blah.h') vs absolute includes ('/path/blah.h') vs relative with path includes ('blah/blah.h')
 - Look at using subgraphs of the dot language to segregate components?
+- Provide a 'zoom' slider on the visualisation to zoom in/out of the view (high level dependencies to low-level dependencies)
