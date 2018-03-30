@@ -15,7 +15,7 @@ class Project
   end
 
   def source_component(name)
-    source_components.detect { |c| c.name.downcase == name.downcase }
+    source_components.detect { |c| c.name == name }
   end
 
   def dependencies(component)

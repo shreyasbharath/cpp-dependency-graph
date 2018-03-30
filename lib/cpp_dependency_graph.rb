@@ -10,15 +10,15 @@ module CppDependencyGraph
     project = Project.new(project_dir)
     graph = DependencyGraph.new(project)
     deps = graph.all_component_links
-    GraphVisualiser.generate_dot_file(deps, output_file)
+    GraphVisualiser.new.generate_dot_file(deps, output_file)
   end
 
   def generate_component_graph(project_dir, component, output_file)
     project = Project.new(project_dir)
     graph = DependencyGraph.new(project)
     deps = graph.component_links(component)
-    GraphVisualiser.generate_dot_file(deps, output_file)
-    GraphVisualiser.generate_html_file(deps, output_file)
+    GraphVisualiser.new.generate_dot_file(deps, output_file)
+    # GraphVisualiser.new.generate_html_file(deps, output_file)
   end
 
   def generate_component_class_graph(project_dir, component, output_file)
@@ -29,9 +29,10 @@ module CppDependencyGraph
     source_files = source_component.source_files
     deps = {}
     source_files.each do |file|
-      internal_includes = file.includes.reject { |include| source_component.external_includes.any?(include) }
-      deps[file.basename] = ComponentLink.new(file.basename, internal_includes)
+      class_name = file.basename
+      internal_includes = file.includes.reject { |inc| source_component.external_includes.any?(inc) }
+      deps[class_name] = internal_includes.map { |inc| ComponentLink.new(class_name, inc, false) }
     end
-    GraphVisualiser.generate_dot_file(deps, output_file)
+    GraphVisualiser.new.generate_dot_file(deps, output_file)
   end
 end

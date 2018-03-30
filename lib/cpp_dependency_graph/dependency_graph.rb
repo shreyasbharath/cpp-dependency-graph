@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require_relative 'component_link'
 require_relative 'project'
+require_relative 'component_link'
+require_relative 'cycle_detector'
 
 # Returns a hash of component links
 class DependencyGraph
@@ -19,17 +20,16 @@ class DependencyGraph
 
   def component_links(name)
     return {} unless all_component_links.key?(name)
-    component_label = all_component_links[name].label
-    incoming_links(component_label).merge(outgoing_links(name))
+    incoming_links(name).merge(outgoing_links(name))
   end
 
   private
 
   def build_hash_component_links
-    component_links = @project.source_components.map do |component|
-                        key = component.name.downcase
-                        value = ComponentLink.new(component.name, @project.dependencies(component))
-                        [key, value]
+    raw_links = @project.source_components.map { |c| [c, @project.dependencies(c)] }.to_h
+    component_links = raw_links.map do |c, links|
+                        c_links = links.map { |link| ComponentLink.new(c.name, link, false) }
+                        [c.name, c_links]
                       end.to_h
     component_links
   end
@@ -38,14 +38,11 @@ class DependencyGraph
     all_component_links.slice(name)
   end
 
-  def incoming_links(label)
-    incoming_components = all_component_links.select do |component, value|
-      value.links.any? { |dep| dep == label }
-    end
-    incoming_components.map do |component, dep|
-      key = component
-      value = ComponentLink.new(dep.label, [label])
-      [key, value]
+  def incoming_links(target)
+    incoming_c_links = all_component_links.select { |c, c_links| c_links.any? { |link| link.target == target } }
+    incoming_c_links.map do |c_name, _|
+      link = ComponentLink.new(c_name, target, false)
+      [c_name, [link]]
     end.to_h
   end
 end

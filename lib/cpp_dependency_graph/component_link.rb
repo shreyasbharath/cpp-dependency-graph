@@ -1,20 +1,28 @@
 # frozen_string_literal: true
 
 class ComponentLink
-  def initialize(label, links)
-    @label = label
-    @links = links
+  def initialize(source, target, cyclic)
+    @source = source
+    @target = target
   end
 
-  def label
-    @label
+  def source
+    @source
   end
 
-  def links
-    @links
+  def target
+    @target
+  end
+
+  def cyclic
+    @cyclic
   end
 
   def to_s
-    @links.to_a.to_s
+    if @cyclic
+      "#{source} <-> #{target}"
+    else
+      "#{source} -> #{target}"
+    end
   end
 end

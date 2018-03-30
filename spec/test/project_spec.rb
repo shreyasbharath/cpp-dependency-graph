@@ -6,14 +6,14 @@ RSpec.describe Project do
     expect(component_names).to eq(['DataAccess', 'Engine', 'Framework', 'System', 'UI', 'main'])
   end
 
-  it 'returns specific component and is case insensitive' do
+  it 'returns nil component if case does not match' do
     component = Project.new('spec/test/example_project').source_component('enGine')
-    expect(component.name).to eq('Engine')
+    expect(component).to eq(nil)
   end
 
   it 'returns dependencies of component' do
     project = Project.new('spec/test/example_project')
-    component = project.source_component('enGine')
+    component = project.source_component('Engine')
     dependencies = project.dependencies(component)
     expect(dependencies).to include('Framework', 'UI', 'DataAccess')
   end

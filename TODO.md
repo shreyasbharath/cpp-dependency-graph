@@ -22,3 +22,4 @@
 - relative includes ('blah.h') vs absolute includes ('/path/blah.h') vs relative with path includes ('blah/blah.h')
 - Look at using subgraphs of the dot language to segregate components?
 - Provide a 'zoom' slider on the visualisation to zoom in/out of the view (high level dependencies to low-level dependencies)
+- Handling `duplicate` component names? Use a unique identifier (perhaps the path?)
