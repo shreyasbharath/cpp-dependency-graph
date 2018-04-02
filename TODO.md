@@ -3,7 +3,6 @@
 - Use a compiler to get the includes for a file rather than manually scanning the contents
 - Parallelise dependency scanning as much as possible to get the best possible performance
 - Open up the graph automatically after generating an individual graph?
-- Allow user to specify a single component and the tool should print only that component
 - Switch to detect cyclic dependencies (cyclic dependencies highlighted in rendered file)
 - Work with any sort of project structure? Or should this tool recommend an ideal project structure for optimal results?
 - Highlight strongly coupled components (i.e. have lots of outgoing/incoming dependencies). How to visualise strongly coupled components?

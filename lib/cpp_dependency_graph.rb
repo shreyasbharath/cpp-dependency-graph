@@ -35,4 +35,12 @@ module CppDependencyGraph
     end
     GraphVisualiser.new.generate_dot_file(deps, output_file)
   end
+
+  def output_cyclic_dependencies(project_dir)
+    project = Project.new(project_dir)
+    graph = DependencyGraph.new(project)
+    deps = graph.all_component_links
+    cyclic_deps = deps.values.flatten.select { |dep| dep.cyclic? }
+    puts JSON.pretty_generate(cyclic_deps)
+  end
 end

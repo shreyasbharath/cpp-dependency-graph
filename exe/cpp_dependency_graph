@@ -32,7 +32,8 @@ require 'docopt'
 
 doc = <<DOCOPT
   Usage:
-    #{__FILE__} --root_dir <argument> [--component <component> [--class]] --output_file <file>
+    #{__FILE__} generate_graph --root_dir <argument> [--component <component> [--class]] --output_file <file>
+    #{__FILE__} cyclic_dependencies --root_dir <argument> [--component <component> [--class] --output_file <file>]
     #{__FILE__} -h | --help | -v | --version
 
   Options:
@@ -63,14 +64,18 @@ begin
   options.class_diagram = args['--class']
   options.output_file = args['--output_file']
 
-  if options.component
-    if options.class_diagram
-      generate_component_class_graph(options.project_dir, options.component, options.output_file)
+  if args['generate_graph']
+    if options.component
+      if options.class_diagram
+        generate_component_class_graph(options.project_dir, options.component, options.output_file)
+      else
+        generate_component_graph(options.project_dir, options.component, options.output_file)
+      end
     else
-      generate_component_graph(options.project_dir, options.component, options.output_file)
+      generate_project_graph(options.project_dir, options.output_file)
     end
-  else
-    generate_project_graph(options.project_dir, options.output_file)
+  elsif args['cyclic_dependencies']
+    output_cyclic_dependencies(options.project_dir)
   end
 rescue Docopt::Exit => e
   puts e.message
