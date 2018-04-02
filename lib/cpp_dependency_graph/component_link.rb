@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ComponentLink
-  def initialize(source, target, cyclic)
+  def initialize(source, target, cyclic = false)
     @source = source
     @target = target
     @cyclic = cyclic
@@ -15,12 +15,12 @@ class ComponentLink
     @target
   end
 
-  def cyclic
+  def cyclic?
     @cyclic
   end
 
   def to_s
-    if @cyclic
+    if cyclic?
       "#{source} <-> #{target}"
     else
       "#{source} -> #{target}"

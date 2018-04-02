@@ -14,7 +14,8 @@ class GraphVisualiser
 
     deps.each do |source, links|
       links.each do |link|
-        nodes[source].connect(nodes[link.target])
+        connection = nodes[source].connect(nodes[link.target])
+        connection.attributes[:color] = 'red' if link.cyclic?
       end
     end
 
