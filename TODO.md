@@ -1,22 +1,24 @@
-# Questions
+# TODO Items
 
-- Use a compiler to get the includes for a file rather than manually scanning the contents
-- Parallelise dependency scanning as much as possible to get the best possible performance
-- Open up the graph automatically after generating an individual graph?
-- Switch to detect cyclic dependencies (cyclic dependencies highlighted in rendered file)
-- Work with any sort of project structure? Or should this tool recommend an ideal project structure for optimal results?
-- Highlight strongly coupled components (i.e. have lots of outgoing/incoming dependencies). How to visualise strongly coupled components?
-- Provide coupling/cohesion metrics, lookup metrics from Clean Architecture and [this](https://softwareengineering.stackexchange.com/questions/151004/are-there-metrics-for-cohesion-and-coupling)
-- should work with any type of include (relative, absolute or just the filenames)
-- <system> include vs "project" include (how will this work for third party sources that are not part of the codebase?)
-- support prefixes to figure out components?
-- support for a giant `public` include dir where public headers of all components are housed
-- look at 3D visualisation using something like https://github.com/ggeoffrey/cljs-gravity
-- Node size - base it on how many source files (or lines of code)
-- Ignore list? Some components may not want to be seen
-- Use a yaml config file? A pain to pass a whole heap of arguments every time
-- Make the tool incremental? Only generate parts of the new graph if something has changed. Something to think about
-- relative includes ('blah.h') vs absolute includes ('/path/blah.h') vs relative with path includes ('blah/blah.h')
-- Look at using subgraphs of the dot/svg language to cluster component dependencies in the graph
-- Provide a 'zoom' slider on the visualisation to zoom in/out of the view (high level dependencies to low-level dependencies)
-- Handling `duplicate` component names? Use a unique identifier (perhaps the path?)
+- [x] Allow user to specify a single component and the tool should print only that component
+- [x] Print out dependency graphs for all components by default if no single component is specified
+- [ ] Use a compiler to get the includes for a file rather than manually scanning the contents
+- [ ] Parallelise dependency scanning as much as possible to get the best possible performance
+- [ ] Open up the graph automatically after generating an individual graph?
+- [ ] Work with any sort of project structure
+  - [x] source and header files for component in same directory
+  - [ ] source files in same directory but header files in a separate `inc` directory
+  - [x] source files in same directory but header files in a global `inc` directory (all project header files in one place)
+  - [ ] source files and header files don't have matching names (i.e. there's an `api.h` header file and various source files implement them)
+- [ ] Highlight strongly coupled components (i.e. have lots of outgoing/incoming dependencies). How to visualise strongly coupled components?
+- [ ] Provide coupling/cohesion metrics, lookup metrics from Clean Architecture and [this](https://softwareengineering.stackexchange.com/questions/151004/are-there-metrics-for-cohesion-and-coupling)
+- [ ] Work with any type of include relative includes ('blah.h') vs absolute includes ('/path/blah.h') vs relative with path includes ('blah/blah.h')
+- [ ] <system> include vs "project" include (how will this work for third party sources that are not part of the codebase?)
+- [ ] 3D visualisation using something like https://github.com/ggeoffrey/cljs-gravity
+- [ ] Node size - base it on how many source files (or lines of code)
+- [ ] Ignore list? Some components may not want to be seen
+- [ ] Use a yaml config file? A pain to pass a whole heap of arguments every time
+- [ ] Make the tool incremental? Only generate parts of the new graph if something has changed. Something to think about
+- [ ] Look at using subgraphs of the dot/svg language to cluster component dependencies in the graph
+- [ ] Provide a 'zoom' slider on the visualisation to zoom in/out of the view (high level dependencies to low-level dependencies)
+- [ ] Handling `duplicate` component names? Use a unique identifier (perhaps the path?)

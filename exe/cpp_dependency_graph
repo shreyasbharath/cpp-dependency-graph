@@ -50,7 +50,7 @@ begin
   args = Docopt.docopt(doc)
 
   if (args['--version'])
-    puts '0.1.0'        # TODO: Fix this
+    puts VERSION
     Kernel.exit(0)
   end
 

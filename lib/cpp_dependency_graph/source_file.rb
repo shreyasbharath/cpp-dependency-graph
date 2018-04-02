@@ -18,6 +18,10 @@ class SourceFile
     @path ||= File.absolute_path(@path)
   end
 
+  def header?
+    false     # TODO: Implement check extension
+  end
+
   def parent_component
     @parent_component ||= File.dirname(@path).split('/').last
   end
@@ -37,7 +41,7 @@ class SourceFile
   end
 
   def scan_includes
-    file_contents.scan(/#include "([^"]+)"/).uniq.flatten   # TODO: scan <include> too
+    file_contents.scan(/#include "([^"]+)"/).uniq.flatten   # TODO: use compiler lib to scan includes? llvm/clang?
   end
 
   def file_contents

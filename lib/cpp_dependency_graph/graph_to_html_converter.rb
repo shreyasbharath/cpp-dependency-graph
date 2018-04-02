@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-# TODO: Use D3 force graph here with a generated json file
-
+# Generates an HTML file with a D3 force directed graph layout
 class GraphToHtmlConverter
   def self.generate(graph, file)
   end

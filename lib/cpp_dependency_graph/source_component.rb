@@ -19,8 +19,8 @@ class SourceComponent
     @source_files ||= parse_source_files('.{h,hpp,hxx,c,cpp,cxx,cc}')
   end
 
-  def external_includes
-    @external_includes ||= scan_external_includes
+  def includes
+    @includes ||= source_files.flat_map(&:includes).uniq.map { |include| File.basename(include) }
   end
 
   def loc
@@ -28,13 +28,6 @@ class SourceComponent
   end
 
   private
-
-  def scan_external_includes
-    # TODO: This is super inefficient, refactor it
-    all_includes = source_files.flat_map(&:includes).uniq.map { |include| File.basename(include) }
-    source_file_basenames = source_files.map(&:basename)
-    all_includes.reject { |include| source_file_basenames.include?(include) }
-  end
 
   def parse_source_files(extensions)
     path = File.join(@path, File::SEPARATOR) + '*' + extensions

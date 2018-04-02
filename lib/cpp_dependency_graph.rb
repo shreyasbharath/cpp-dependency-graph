@@ -2,7 +2,9 @@
 
 require_relative 'cpp_dependency_graph/project'
 require_relative 'cpp_dependency_graph/dependency_graph'
+require_relative 'cpp_dependency_graph/include_dependency_graph'
 require_relative 'cpp_dependency_graph/graph_visualiser'
+require_relative 'cpp_dependency_graph/version'
 
 # Generates dependency graphs of a project in various output forms
 module CppDependencyGraph
@@ -21,18 +23,10 @@ module CppDependencyGraph
     # GraphVisualiser.new.generate_html_file(deps, output_file)
   end
 
-  def generate_component_class_graph(project_dir, component, output_file)
+  def generate_component_class_graph(project_dir, component_name, output_file)
     project = Project.new(project_dir)
-
-    # TODO: This logic does not belong here
-    source_component = project.source_component(component)
-    source_files = source_component.source_files
-    deps = {}
-    source_files.each do |file|
-      class_name = file.basename
-      internal_includes = file.includes.reject { |inc| source_component.external_includes.any?(inc) }
-      deps[class_name] = internal_includes.map { |inc| ComponentLink.new(class_name, inc, false) }
-    end
+    graph = IncludeDependencyGraph.new(project)
+    deps = graph.include_links(component_name)
     GraphVisualiser.new.generate_dot_file(deps, output_file)
   end
 

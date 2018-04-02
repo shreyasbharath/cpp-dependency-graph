@@ -16,9 +16,9 @@ RSpec.describe SourceComponent do
     expect(source_file_names).to eq(['Engine.h', 'OldEngine.h', 'Engine.cpp'])
   end
 
-  it 'has an external includes attribute' do
+  it 'has an includes attribute' do
     component = SourceComponent.new('spec/test/example_project/Engine')
-    expect(component.external_includes).to eq(['framework.h', 'Display.h', 'DA.h'])
+    expect(component.includes).to eq(['framework.h', 'Display.h', 'DA.h', 'Engine.h'])
   end
 
   it 'has a loc (lines of code) attribute' do
