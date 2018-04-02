@@ -8,6 +8,7 @@ before_install:
   - gem update --system
   - gem update --remote bundler
   - gem --version
+  - gem install bundler
   - bundle --version
 branches:
   only:

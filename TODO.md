@@ -2,7 +2,6 @@
 
 - Use a compiler to get the includes for a file rather than manually scanning the contents
 - Parallelise dependency scanning as much as possible to get the best possible performance
-- Print out dependency graphs for all components by default if no single component is specified
 - Open up the graph automatically after generating an individual graph?
 - Allow user to specify a single component and the tool should print only that component
 - Switch to detect cyclic dependencies (cyclic dependencies highlighted in rendered file)
@@ -12,7 +11,6 @@
 - should work with any type of include (relative, absolute or just the filenames)
 - <system> include vs "project" include (how will this work for third party sources that are not part of the codebase?)
 - support prefixes to figure out components?
-- support case sensitive component names or not?
 - support for a giant `public` include dir where public headers of all components are housed
 - look at 3D visualisation using something like https://github.com/ggeoffrey/cljs-gravity
 - Node size - base it on how many source files (or lines of code)
@@ -20,6 +18,6 @@
 - Use a yaml config file? A pain to pass a whole heap of arguments every time
 - Make the tool incremental? Only generate parts of the new graph if something has changed. Something to think about
 - relative includes ('blah.h') vs absolute includes ('/path/blah.h') vs relative with path includes ('blah/blah.h')
-- Look at using subgraphs of the dot language to segregate components?
+- Look at using subgraphs of the dot/svg language to cluster component dependencies in the graph
 - Provide a 'zoom' slider on the visualisation to zoom in/out of the view (high level dependencies to low-level dependencies)
 - Handling `duplicate` component names? Use a unique identifier (perhaps the path?)

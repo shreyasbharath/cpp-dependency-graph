@@ -26,10 +26,11 @@ class DependencyGraph
   private
 
   def build_hash_component_links
-    raw_links = @project.source_components.map { |c| [c, @project.dependencies(c)] }.to_h
-    component_links = raw_links.map do |c, links|
-                        c_links = links.map { |link| ComponentLink.new(c.name, link, false) }
-                        [c.name, c_links]
+    raw_links = @project.source_components.map { |c| [c.name, @project.dependencies(c)] }.to_h
+    cycle_detector = CycleDetector.new(raw_links)
+    component_links = raw_links.map do |source, links|
+                        c_links = links.map { |target| ComponentLink.new(source, target, cycle_detector.cyclic?(source, target)) }
+                        [source, c_links]
                       end.to_h
     component_links
   end

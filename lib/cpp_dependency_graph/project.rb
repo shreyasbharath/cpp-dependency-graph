@@ -19,8 +19,7 @@ class Project
   end
 
   def dependencies(component)
-    deps = component.external_includes.map { |include| component_for_include(include) }.reject(&:empty?)
-    Set.new(deps)
+    component.external_includes.map { |include| component_for_include(include) }.reject(&:empty?).uniq
   end
 
   private

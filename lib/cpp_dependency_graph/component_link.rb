@@ -4,6 +4,7 @@ class ComponentLink
   def initialize(source, target, cyclic)
     @source = source
     @target = target
+    @cyclic = cyclic
   end
 
   def source
