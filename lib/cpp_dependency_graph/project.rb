@@ -32,13 +32,20 @@ class Project
   end
 
   def component_for_include(include)
-    source_file = source_files.find { |file| file.basename == include }
-    return source_file.parent_component unless source_file.nil?
-    ''
+    header_file = source_files.find { |file| file.basename == include }
+    parent_component(header_file)
   end
 
   def source_files
     @source_files ||= source_components.flat_map(&:source_files)
+  end
+
+  def parent_component(header_file)
+    return '' if header_file.nil?
+    files = source_files.select { |file| file.basename_no_extension == header_file.basename_no_extension }
+    corresponding_files = files.reject { |file| file.basename == header_file.basename }
+    return header_file.parent_component if corresponding_files.size == 0
+    corresponding_files[0].parent_component
   end
 
   def fetch_all_dirs(source_dir)

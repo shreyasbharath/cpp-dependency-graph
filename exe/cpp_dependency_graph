@@ -32,7 +32,7 @@ require 'docopt'
 
 doc = <<DOCOPT
   Usage:
-    #{__FILE__} generate_graph --root_dir <argument> [--component <component> [--class]] --output_file <file>
+    #{__FILE__} generate_graph --root_dir <argument> [--component <component> [--class]] --output_file <file> [--output_format <format>]
     #{__FILE__} cyclic_dependencies --root_dir <argument> [--component <component> [--class] --output_file <file>]
     #{__FILE__} -h | --help | -v | --version
 
@@ -43,6 +43,7 @@ doc = <<DOCOPT
     -c --component component    component to analyse and generate graph for (case sensitive!)
     --class                     generate internal class diagram for specified component
     -o --output_file file       name of output graph file to be generated
+    --output_format format      format of output file (one of dot or html)
 DOCOPT
 
 begin

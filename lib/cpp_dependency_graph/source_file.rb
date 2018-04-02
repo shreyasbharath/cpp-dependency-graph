@@ -10,6 +10,10 @@ class SourceFile
     @basename ||= File.basename(@path)
   end
 
+  def basename_no_extension
+    @basename_no_extension ||= File.basename(@path, File.extname(@path))
+  end
+
   def path
     @path ||= File.absolute_path(@path)
   end
