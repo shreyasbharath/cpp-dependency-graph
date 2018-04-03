@@ -41,7 +41,8 @@ class SourceFile
   end
 
   def scan_includes
-    file_contents.scan(/#include "([^"]+)"/).uniq.flatten   # TODO: use compiler lib to scan includes? llvm/clang?
+    # file_contents.scan(/#include "([^"]+)"/).uniq.flatten
+    file_contents.scan(/#include ["|<](.+)["|>]/).uniq.flatten   # TODO: use compiler lib to scan includes? llvm/clang?
   end
 
   def file_contents

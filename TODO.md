@@ -4,6 +4,9 @@
 - [x] Allow user to specify a single component and the tool should print only that component
 - [x] Print out dependency graphs for all components by default if no single component is specified
 - [ ] Use a compiler to get the includes for a file rather than manually scanning the contents
+  - [ ] Manual scanning does not work when #includes are #ifdefed out for example
+  - [ ] <system> include vs "project" include (how will this work for third party sources that are not part of the codebase?)
+  - [ ] Work with any type of include relative includes ('blah.h') vs absolute includes ('/path/blah.h') vs relative with path includes ('blah/blah.h')
 - [ ] Parallelise dependency scanning as much as possible to get the best possible performance
 - [ ] Open up the graph automatically after generating an individual graph?
 - [ ] Work with any sort of project structure
@@ -13,8 +16,6 @@
   - [ ] source files and header files don't have matching names (i.e. there's an `api.h` header file and various source files implement them)
 - [ ] Highlight strongly coupled components (i.e. have lots of outgoing/incoming dependencies). How to visualise strongly coupled components?
 - [ ] Provide coupling/cohesion metrics, lookup metrics from Clean Architecture and [this](https://softwareengineering.stackexchange.com/questions/151004/are-there-metrics-for-cohesion-and-coupling)
-- [ ] Work with any type of include relative includes ('blah.h') vs absolute includes ('/path/blah.h') vs relative with path includes ('blah/blah.h')
-- [ ] <system> include vs "project" include (how will this work for third party sources that are not part of the codebase?)
 - [ ] 3D visualisation using something like https://github.com/ggeoffrey/cljs-gravity
 - [ ] Node size - base it on how many source files (or lines of code)
 - [ ] Ignore list? Some components may not want to be seen

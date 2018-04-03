@@ -32,8 +32,8 @@ require 'docopt'
 
 doc = <<DOCOPT
   Usage:
-    #{__FILE__} generate_graph --root_dir <argument> [--component <component> [--include]] --output_file <file> [--output_format <format>]
-    #{__FILE__} cyclic_dependencies --root_dir <argument> [--component <component> [--include] --output_file <file>]
+    #{__FILE__} generate_graph --root_dir <argument> [--component <component>] [--include] --output_file <file> [--output_format <format>]
+    #{__FILE__} cyclic_dependencies --root_dir <argument> [--component <component>] [--include] [--output_file <file>]
     #{__FILE__} -h | --help | -v | --version
 
   Options:
