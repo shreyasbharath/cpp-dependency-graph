@@ -23,7 +23,7 @@ module CppDependencyGraph
     # GraphVisualiser.new.generate_html_file(deps, output_file)
   end
 
-  def generate_component_class_graph(project_dir, component_name, output_file)
+  def generate_component_include_graph(project_dir, component_name, output_file)
     project = Project.new(project_dir)
     graph = IncludeDependencyGraph.new(project)
     deps = graph.include_links(component_name)

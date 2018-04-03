@@ -27,21 +27,29 @@ This tool is inspired by [rubrowser](http://www.emadelsaid.com/rubrowser/) and [
 
 To generate the overall depenency graph for a project, use it like so -
 
-`cpp_dependency_graph -r spec\test\example_project\ -o deps.dot`
+`cpp_dependency_graph generate_graph -r spec\test\example_project\ -o deps.dot`
 
-If your project has a number of nodes, then this will take a while to be generated (and also rendered).
+If your project has a large number of components (> 100 and lots of connections between them), then generation (and subsequent rendering) may take some time.
 
 ### Individual component graph
 
 This will highlight the dependencies coming in and going out of a specific component. This allows you to filter out extraneous detail and study individual components in more detail.
 
-`cpp_dependency_graph -r spec\test\example_project\ -c Engine -o deps.dot`
+`cpp_dependency_graph generate_graph -r spec\test\example_project\ -c Engine -o deps.dot`
+
+Here's a component graph generated for the `queue` component in [rethinkdb](https://github.com/rethinkdb/rethinkdb)
+
+![Queue component graph of rethinkdb](examples/rethinkdb_queue_component.png)
 
 ### Component class/file topology graph
 
-This will highlight dependencies at a file level within a specific component
+This will highlight dependencies of includes within a specific component
 
-`cpp_dependency_graph -r spec\test\example_project\ -c Engine --class -o deps.dot`
+`cpp_dependency_graph generate_graph -r spec\test\example_project\ -c Engine --include -o deps.dot`
+
+Here's a component include graph generated for the `queue` component in [rethinkdb](https://github.com/rethinkdb/rethinkdb)
+
+![Queue include graph of rethinkdb](examples/rethinkdb_queue_include.png)
 
 ## Development
 

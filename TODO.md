@@ -1,5 +1,6 @@
 # TODO Items
 
+- [ ] Try it out on various small/large C/C++ open source projects
 - [x] Allow user to specify a single component and the tool should print only that component
 - [x] Print out dependency graphs for all components by default if no single component is specified
 - [ ] Use a compiler to get the includes for a file rather than manually scanning the contents
