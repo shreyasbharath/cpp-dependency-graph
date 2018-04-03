@@ -1,6 +1,7 @@
 # TODO Items
 
-- [ ] Try it out on various small/large C/C++ open source projects
+- [ ] Documentation
+  - [ ] Screencast of how to use tool on projects
 - [x] Allow user to specify a single component and the tool should print only that component
 - [x] Print out dependency graphs for all components by default if no single component is specified
 - [ ] Use a compiler to get the includes for a file rather than manually scanning the contents
@@ -8,21 +9,24 @@
   - [ ] <system> include vs "project" include (how will this work for third party sources that are not part of the codebase?)
   - [ ] Work with any type of include relative includes ('blah.h') vs absolute includes ('/path/blah.h') vs relative with path includes ('blah/blah.h')
 - [ ] Parallelise dependency scanning as much as possible to get the best possible performance
-- [ ] Open up the graph automatically after generating an individual graph?
+- [ ] Open up the graph automatically after generating an individual graph
 - [ ] Work with any sort of project structure
   - [ ] Header only projects
   - [x] source and header files for component in same directory
   - [ ] source files in same directory but header files in a separate `inc` directory
   - [x] source files in same directory but header files in a global `inc` directory (all project header files in one place)
   - [ ] source files and header files don't have matching names (i.e. there's an `api.h` header file and various source files implement them)
-- [ ] Highlight strongly coupled components (i.e. have lots of outgoing/incoming dependencies). How to visualise strongly coupled components?
+  - [ ] Try it out on various small/large C/C++ open source projects
 - [ ] Provide coupling/cohesion metrics, lookup metrics from Clean Architecture and [this](https://softwareengineering.stackexchange.com/questions/151004/are-there-metrics-for-cohesion-and-coupling)
-  - [ ] Interface vs implementation coupling (interface is worse!). Highlighting interface vs implementation coupling between components on graph?
-- [ ] 3D visualisation using something like https://github.com/ggeoffrey/cljs-gravity
-- [ ] Node size - base it on how many source files (or lines of code)
 - [ ] Ignore list? Some components may not want to be seen
 - [ ] Use a yaml config file? A pain to pass a whole heap of arguments every time
 - [ ] Make the tool incremental? Only generate parts of the new graph if something has changed. Something to think about
-- [ ] Look at using subgraphs of the dot/svg language to cluster component dependencies in the graph
-- [ ] Provide a 'zoom' slider on the visualisation to zoom in/out of the view (high level dependencies to low-level dependencies)
 - [ ] Handling `duplicate` component names? Use a unique identifier (perhaps the path?)
+- [ ] Visualisation
+  - [ ] Highlight strongly coupled components (i.e. have lots of outgoing/incoming dependencies). How to visualise strongly coupled components?
+  - [ ] Interface vs implementation coupling (interface is worse!). Highlighting interface vs implementation coupling between components on graph?
+  - [ ] Look at using subgraphs of the dot/svg language to cluster component dependencies in the graph
+  - [ ] Node size - base it on how many source files (or lines of code)
+  - [ ] Provide a 'zoom' slider on the visualisation to zoom in/out of the view (high level dependencies to low-level dependencies)
+  - [ ] Visualise components matching user provided regex only
+  - [ ] 3D visualisation using something like https://github.com/ggeoffrey/cljs-gravity

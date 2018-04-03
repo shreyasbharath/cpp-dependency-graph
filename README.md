@@ -15,7 +15,11 @@ This tool aims to -
 - provide multiple views into the architecture of a codebase
 - generate views at multiple levels of the architecture
 
-This tool is inspired by [rubrowser](http://www.emadelsaid.com/rubrowser/) and [cpp-dependencies](https://github.com/tomtom-international/cpp-dependencies).
+## Inspiration
+
+This tool is inspired by a number of projects [rubrowser](http://www.emadelsaid.com/rubrowser/) and [cpp-dependencies](https://github.com/tomtom-international/cpp-dependencies) and [objc-dependency-visualizer](https://github.com/PaulTaykalo/objc-dependency-visualizer).
+
+A huge shout out to the poeple behind these projects.
 
 ## Usage
 

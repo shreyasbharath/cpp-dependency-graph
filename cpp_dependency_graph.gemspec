@@ -39,5 +39,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake', '~> 12.3'
   s.add_development_dependency 'rspec', '~> 3.7'
   s.add_development_dependency 'rubocop', '~> 0.54'
+  s.add_development_dependency 'ruby-prof', '~> 0.17'
   s.add_development_dependency 'ruby-debug-ide', '~> 0.6'
 end

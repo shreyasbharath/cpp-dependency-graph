@@ -26,12 +26,15 @@ require 'docopt'
 require 'ostruct'
 require 'cpp_dependency_graph'
 
+require 'ruby-prof'
+
 include CppDependencyGraph
 
-require 'docopt'
+RubyProf.start
 
 doc = <<DOCOPT
   Usage:
+    #{__FILE__} list_components --root_dir <argument> [--output_file <file>]
     #{__FILE__} generate_graph --root_dir <argument> [--component <component>] [--include] --output_file <file> [--output_format <format>]
     #{__FILE__} cyclic_dependencies --root_dir <argument> [--component <component>] [--include] [--output_file <file>]
     #{__FILE__} -h | --help | -v | --version
@@ -75,9 +78,15 @@ begin
     else
       generate_project_graph(options.project_dir, options.output_file)
     end
+  elsif args['list_components']
+    # TODO: List all components
   elsif args['cyclic_dependencies']
     output_cyclic_dependencies(options.project_dir)
   end
 rescue Docopt::Exit => e
   puts e.message
 end
+
+result = RubyProf.stop
+printer = RubyProf::CallTreePrinter.new(result)
+printer.print(path: '.', profile: 'callgrind')
