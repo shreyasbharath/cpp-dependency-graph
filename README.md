@@ -23,15 +23,19 @@ This tool is inspired by [rubrowser](http://www.emadelsaid.com/rubrowser/) and [
 
 `gem install cpp_dependency_graph`
 
-### Overall dependency graph
+### Overall component dependency graph
 
-To generate the overall depenency graph for a project, use it like so -
+To generate the overall component depenency graph for a project, use it like so -
 
 `cpp_dependency_graph generate_graph -r spec\test\example_project\ -o deps.dot`
 
-If your project has a large number of components (> 100 and lots of connections between them), then generation (and subsequent rendering) may take some time.
+Below is the overall componet dependency graph for [leveldb](https://github.com/google/leveldb)
 
-### Individual component graph
+![Overall component graph of leveldb](examples/leveldb_overall.png)
+
+**NOTE** - If your project has a large number of components (> 100 and lots of connections between them), then generation (and subsequent rendering) may take some time.
+
+### Individual component dependency graph
 
 This will highlight the dependencies coming in and going out of a specific component. This allows you to filter out extraneous detail and study individual components in more detail.
 
@@ -41,7 +45,11 @@ Here's a component graph generated for the `queue` component in [rethinkdb](http
 
 ![Queue component graph of rethinkdb](examples/rethinkdb_queue_component.png)
 
-### Component class/file topology graph
+Here's a component graph generated for the `table` component in [rocksdb](https://github.com/facebook/rocksdb)
+
+![Table component graph of rethinkdb](examples/rocksdb_table_component.png)
+
+### Component include dependency graph
 
 This will highlight dependencies of includes within a specific component
 

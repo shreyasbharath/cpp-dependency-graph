@@ -10,12 +10,14 @@
 - [ ] Parallelise dependency scanning as much as possible to get the best possible performance
 - [ ] Open up the graph automatically after generating an individual graph?
 - [ ] Work with any sort of project structure
+  - [ ] Header only projects
   - [x] source and header files for component in same directory
   - [ ] source files in same directory but header files in a separate `inc` directory
   - [x] source files in same directory but header files in a global `inc` directory (all project header files in one place)
   - [ ] source files and header files don't have matching names (i.e. there's an `api.h` header file and various source files implement them)
 - [ ] Highlight strongly coupled components (i.e. have lots of outgoing/incoming dependencies). How to visualise strongly coupled components?
 - [ ] Provide coupling/cohesion metrics, lookup metrics from Clean Architecture and [this](https://softwareengineering.stackexchange.com/questions/151004/are-there-metrics-for-cohesion-and-coupling)
+  - [ ] Interface vs implementation coupling (interface is worse!). Highlighting interface vs implementation coupling between components on graph?
 - [ ] 3D visualisation using something like https://github.com/ggeoffrey/cljs-gravity
 - [ ] Node size - base it on how many source files (or lines of code)
 - [ ] Ignore list? Some components may not want to be seen
