@@ -37,7 +37,11 @@ class GraphVisualiser
 
     json_nodes = JSON.pretty_generate(nodes)
     json_connections = JSON.pretty_generate(connections)
-    File.write(file, json_nodes + json_connections)
+    # File.write(file, json_nodes + json_connections)
+
+    template = File.read('views/index.html.template')
+    contents = template % { dependency_links: json_connections }
+    File.write(file, contents)
   end
 
   private

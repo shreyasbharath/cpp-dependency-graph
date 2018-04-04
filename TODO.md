@@ -2,6 +2,7 @@
 
 - [ ] Documentation
   - [ ] Screencast of how to use tool on projects
+  - [ ] Create a github.io homepage
 - [ ] Progress messages
   - [ ] Progress bar?
 - [x] Allow user to specify a single component and the tool should print only that component

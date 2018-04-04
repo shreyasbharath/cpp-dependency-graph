@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+    <style>
+        .node.filtered {
+            fill-opacity: 0.3;
+            stroke-opacity: 0.3;
+        }
+
+        .structNode.filtered {
+            fill-opacity: 0.3;
+            stroke-opacity: 0.3;
+        }
+
+        text.filtered {
+            fill-opacity: 0;
+            stroke-opacity: 0;
+        }
+
+        .link.filtered {
+            stroke: #ddd;
+            fill-opacity: 0.1;
+            stroke-opacity: 0.1;
+        }
+
+        .link.dependency {
+            stroke: #900;
+            fill: #900;
+            pointer-events: none;
+        }
+
+        .link.dependants {
+            stroke: #090;
+            fill: #090;
+            pointer-events: none;
+        }
+
+        .node.skipped {
+            fill-opacity: 0.0;
+            stroke-opacity: 0.0;
+        }
+
+        text.skipped {
+            fill-opacity: 0;
+            stroke-opacity: 0;
+        }
+
+        .structNode.skipped {
+            fill-opacity: 0.0;
+            stroke-opacity: 0.0;
+        }
+
+
+        .link.skipped {
+            stroke: #ddd;
+            fill-opacity: 0.0;
+            stroke-opacity: 0.0;
+        }
+
+        .node {
+            stroke: #000;
+            stroke-width: 0.5px;
+        }
+
+        .structNode {
+            stroke: #000;
+            stroke-width: 0.5px;
+        }
+
+        .link {
+            stroke: #999;
+            stroke-opacity: .6;
+            fill: none;
+            stroke-width: 1.5px;
+            pointer-events: none;
+        }
+
+        .marker#default {
+            stroke: #999;
+            fill: #999;
+            pointer-events: none;
+        }
+
+        .marker#dependency {
+            stroke: #900;
+            fill: #900;
+            pointer-events: none;
+        }
+
+        .marker#dependants {
+            stroke: #090;
+            fill: #090;
+            pointer-events: none;
+        }
+
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        html {
+            overflow: hidden;
+        }
+
+        text {
+            stroke: #000;
+            stroke-width: 0.5px;
+            text-anchor: middle;
+            font: 10px sans-serif;
+            font-weight: normal;
+            font-style: normal;
+            pointer-events: none;
+        }
+
+        svg text {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            cursor: default;
+        }
+
+        svg text::selection {
+            background: none;
+        }
+
+        form {
+            position: absolute;
+            right: 10px;
+            top: 60px;
+        }
+
+        #simple-menu {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script type="text/javascript" src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/underscore@1.8.3/underscore-min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/d3@4.7.4/build/d3.min.js"></script>
+
+    <!-- ================================================= -->
+    <!-- ===========ACTUAL HTML           ================ -->
+    <!-- ================================================= -->
+
+    <form id="form">
+        <label>
+            <input type="range" name="circle_size" min="1" max="50" value="15" /> Circle size</label>
+        <br>
+        <label>
+            <input type="range" name="charge_multiplier" min="1" max="500" value="100" /> Charge multiplier</label>
+        <br>
+        <label>
+            <input type="range" name="link_strength" min="0.1" max="100" value="7" /> Link strength</label>
+        <br>
+        <label>
+            <input type="checkbox" name="show_texts_near_circles" /> Show names</label>
+        <br>
+        <input id="search_input" placeholder="Type regexp to filter nodes" style="width:100%%;">
+        <br>
+    </form>
+
+    <div id="chart">
+        <!-- Here the SVG will be placed-->
+    </div>
+
+    <script type='text/javascript'>
+        var dependencies = {
+            links: %{dependency_links},
+            objects: { }
+        };
+    </script>
+    <script type="text/javascript">
+        //  ===================================================
+        //  ===============  SELECTING_NODE       =============
+        //  ===================================================
+
+        let graph_actions = {
+            create: function (svg, dvgraph) {
+
+                return {
+                    selectedIdx: -1,
+                    selectedType: "normal",
+                    svg: svg,
+                    selectedObject: {},
+                    dvgraph: dvgraph,
+
+                    deselect_node: function (d) {
+                        this._unlockNode(d);
+                        this.selectedIdx = -1;
+                        this.selectedObject = {};
+
+                        this.svg.selectAll('.node, .structNode')
+                            .each(function (node) {
+                                node.filtered = false
+                            })
+                            .classed('filtered', false)
+                            .transition();
+
+                        this.svg.selectAll('path, text')
+                            .classed('filtered', false)
+                            .transition();
+
+
+                        this.svg.selectAll('.link')
+                            .attr("marker-end", "url(#default)")
+                            .classed('filtered', false)
+                            .classed('dependency', false)
+                            .classed('dependants', false)
+                            .transition();
+                    },
+
+                    deselect_selected_node: function () {
+                        this.deselect_node(this.selectedObject)
+                    },
+
+                    _lockNode: function (node) {
+                        node.fixed = true;
+                        node.fx = node.x;
+                        node.fy = node.y;
+                    },
+
+                    _unlockNode: function (node) {
+                        delete node.fixed;
+                        node.fx = null;
+                        node.fy = null;
+                    },
+
+                    _selectAndLockNode: function (node, type) {
+                        this._unlockNode(this.selectedObject);
+                        this.selectedIdx = node.idx;
+                        this.selectedObject = node;
+                        this.selectedType = type;
+                        this._lockNode(this.selectedObject);
+                    },
+
+                    _deselectNodeIfNeeded: function (node, type) {
+                        if (node.idx === this.selectedIdx && this.selectedType === type) {
+                            this.deselect_node(node);
+                            return true;
+                        }
+                        return false;
+                    },
+
+                    _fadeOutAllNodesAndLinks: function () {
+                        // Fade out all circles
+                        this.svg.selectAll('.node, .structNode')
+                            .classed('filtered', true)
+                            .each(function (node) {
+                                node.filtered = true;
+                                node.neighbours = false;
+                            }).transition();
+
+                        this.svg.selectAll('text')
+                            .classed('filtered', true)
+                            .transition();
+
+                        this.svg.selectAll('.link')
+                            .classed('dependency', false)
+                            .classed('dependants', false)
+                            .transition()
+                            .attr("marker-end", "");
+
+                    },
+
+                    _highlightNodesWithIndexes: function (indexesArray) {
+                        this.svg.selectAll('.node, .structNode, text')
+                            .filter((node) => indexesArray.indexOf(node.index) > -1)
+                            .classed('filtered', false)
+                            .each((node) => {
+                                node.filtered = false;
+                                node.neighbours = true;
+                            })
+                            .transition();
+                    },
+
+                    _isDependencyLink: (node, link) => (link.source.index === node.index),
+                    _nodeExistsInLink: (node, link) => (link.source.index === node.index || link.target.index === node.index),
+                    _oppositeNodeOfLink: (node, link) => (link.source.index === node.index ? link.target : link.target.index === node.index ? link.source : null),
+
+                    _highlightLinksFromRootWithNodesIndexes: function (root, nodeNeighbors, maxLevel) {
+                        this.svg.selectAll('.link')
+                            .filter((link) => nodeNeighbors.indexOf(link.source.index) > -1)
+                            .classed('filtered', false)
+                            .classed('dependency', (l) => this._nodeExistsInLink(root, l) && this._isDependencyLink(root, l))
+                            .classed('dependants', (l) => this._nodeExistsInLink(root, l) && !this._isDependencyLink(root, l))
+                            .attr("marker-end", (l) => this._nodeExistsInLink(root, l) ? (this._isDependencyLink(root, l) ? "url(#dependency)" : "url(#dependants)") : (maxLevel == 1 ? "" : "url(#default)"))
+                            .transition();
+                    },
+
+                    selectNodesStartingFromNode: function (node, maxLevel = 100) {
+                        if (this._deselectNodeIfNeeded(node, "level" + maxLevel)) {
+                            return
+                        }
+                        this._selectAndLockNode(node, "level" + maxLevel);
+
+                        let neighborIndexes =
+                            this.dvgraph.nodesStartingFromNode(node, { max_level: maxLevel, use_backward_search: maxLevel == 1 })
+                                .map((n) => n.index);
+
+                        this._fadeOutAllNodesAndLinks();
+                        this._highlightNodesWithIndexes(neighborIndexes);
+                        this._highlightLinksFromRootWithNodesIndexes(node, neighborIndexes, maxLevel);
+                    }
+
+                };
+            }
+        };
+
+
+    </script>
+    <script type="text/javascript">
+        //  ===================================================
+        //  =============== PARSING ===========================
+        //  ===================================================
+        // Input
+        // { links : [ {source: sourceName, dest : destName} * ] }
+        // Output:
+        let objcdv = {
+            version: "0.0.1",
+            _createGraph: function (_objects) {
+                return {
+                    nodes: [],
+                    links: [],
+                    nodesSet: {},
+                    objects: setDefaultValue(_objects, []),
+
+                    addLink: function (link) {
+
+                        var source_node = this.getNode(link.source);
+                        source_node.source++;
+
+                        var dest_node = this.getNode(link.dest);
+                        dest_node.dest++;
+
+                        this.links.push({
+                            // d3 js properties
+                            source: source_node.idx,
+                            target: dest_node.idx,
+
+                            // Additional link information
+                            sourceNode: source_node,
+                            targetNode: dest_node
+                        })
+                    },
+
+                    getNode: function (nodeName) {
+                        var node = this.nodesSet[nodeName];
+                        if (node == null) {
+                            var idx = Object.keys(this.nodesSet).length;
+                            let object = setDefaultValue(this.objects[nodeName], {})
+                            this.nodesSet[nodeName] = node = { idx: idx, name: nodeName, source: 1, dest: 0, type: object.type };
+                        }
+                        return node
+                    },
+
+                    updateNodes: function (f) {
+                        _.values(this.nodesSet).forEach(f)
+                    },
+
+                    d3jsGraph: function () {
+                        // Sorting up nodes, since, in some cases they aren't returned in correct number
+                        var nodes = _.values(this.nodesSet).slice(0).sort((a, b) => a.idx - b.idx);
+                        return { nodes: nodes, links: this.links };
+                    },
+
+                    nodesStartingFromNode: function (node, { max_level = 100, use_backward_search = false, use_forward_search = true } = {}) {
+                        // Figure out the neighboring node id's with brute strength because the graph is small
+                        var neighbours = {};
+                        neighbours[node.index] = node;
+
+                        var nodesToCheck = [node.index];
+                        let current_level = 0;
+                        while (Object.keys(nodesToCheck).length != 0) {
+                            var forwardNeighbours = [];
+                            var backwardNeighbours = [];
+
+                            let tmpNeighbours = {};
+                            if (use_forward_search) {
+                                forwardNeighbours = this.links
+                                    .filter((link) => link.source.index in neighbours)
+                                    .filter((link) => !(link.target.index in neighbours))
+                                    .map((link) => {
+                                        tmpNeighbours[link.target.index] = link.target;
+                                        return link.target.index;
+                                    });
+                            }
+                            if (use_backward_search) {
+                                backwardNeighbours = this.links
+                                    .filter((link) => link.target.index in neighbours)
+                                    .filter((link) => !(link.source.index in neighbours))
+                                    .map((link) => {
+                                        tmpNeighbours[link.source.index] = link.source;
+                                        return link.source.index;
+                                    });
+                            }
+
+                            _.extend(neighbours, tmpNeighbours);
+
+
+                            nodesToCheck = forwardNeighbours.concat(backwardNeighbours);
+                            console.log("Nodes to check" + nodesToCheck);
+
+                            // Skip if we reached max level
+                            current_level++;
+                            if (current_level == max_level) {
+                                console.log("Reached max at level" + current_level);
+                                break;
+                            }
+                        }
+                        return _.values(neighbours);
+
+                    }
+
+                };
+
+            },
+            _createPrefixes: function () {
+                return {
+                    _prefixesDistr: {},
+
+                    _sortedPrefixes: null,
+
+                    addName: function (name) {
+                        this._sortedPrefixes = null;
+
+                        var prefix = name.substring(0, 2);
+                        if (!(prefix in this._prefixesDistr)) {
+                            this._prefixesDistr[prefix] = 1;
+                        } else {
+                            this._prefixesDistr[prefix]++;
+                        }
+                    },
+
+                    prefixIndexForName: function (name) {
+                        var sortedPrefixes = this._getSortedPrefixes();
+                        var prefix = name.substring(0, 2);
+                        return _.indexOf(sortedPrefixes, prefix)
+                    },
+
+                    _getSortedPrefixes: function () {
+                        if (this._sortedPrefixes == null) {
+                            this._sortedPrefixes = _.map(this._prefixesDistr, (v, k) => ({ "key": k, "value": v }))
+                                .sort((a, b) => b.value - a.value)
+                                .map(o => o.key)
+                        }
+                        return this._sortedPrefixes
+                    }
+                };
+            },
+
+
+            parse_dependencies_graph: function (dependencies) {
+
+                var graph = this._createGraph(dependencies.objects);
+                var prefixes = this._createPrefixes();
+
+                dependencies.links
+                    .filter(link => link.source != link.dest)
+                    .forEach(link => {
+                        graph.addLink(link);
+
+                        prefixes.addName(link.source);
+                        prefixes.addName(link.dest);
+                    });
+
+                // Make sure all nodes are present, even if they aren't connected
+                if (dependencies.objects != null) {
+                    for (p in dependencies.objects) {
+                        graph.getNode(p)
+                    }
+                }
+
+                graph.updateNodes((node) => {
+                    node.weight = node.source;
+                    node.group = prefixes.prefixIndexForName(node.name) + 1
+                });
+
+                return graph
+
+            }
+
+        };
+
+
+        function setDefaultValue(value, defaultValue) {
+            return (value === undefined) ? defaultValue : value;
+        }
+
+    </script>
+    <script type="text/javascript">
+        let dvconfig = {
+            create: function () {
+                return {
+                    default_link_distance: 10,
+
+                    // How far can we change default_link_distance?
+                    // 0   - I don't care
+                    // 0.5 - Change it as you want, but it's preferrable to have default_link_distance
+                    // 1   - One does not change default_link_distance
+                    default_link_strength: 0.7,
+
+                    // Should I comment this?
+                    default_circle_radius: 15,
+
+                    // you can set it to true, but this will not help to understanf what's going on
+                    show_texts_near_circles: false,
+
+                    default_max_texts_length: 100,
+
+                    charge_multiplier: 200
+                }
+            }
+        };
+
+    </script>
+    <script type="text/javascript">
+        let dvvisualizer = {
+            version: "0.0.1",
+
+            create: function (_svg, _config, _d3graph) {
+                var visualizer = {};
+                Object.assign(visualizer, {
+                    config: _config,
+                    svg: _svg,
+                    d3graph: _d3graph,
+                    simulation: null,
+                    color: null,
+
+                    _link: null,          // d3 selection of all links
+                    _node: null,          // d3 selection of all nodes (non-struct)
+                    _textNode: null,      // d3 selection of all text nodes
+                    _structNode: null,    // d3 selection of all struct nodes
+                    objectNodes: null,    // d3 selection for struct and other nodes
+                    allNodes: null,       // d3 selection for all Possible nodes
+
+                    updateMarkers: function (size) {
+                        function viewBox(x, y, w, h) { return [x + "", y + "", w + "", h + ""].join(" ") }
+                        function moveTo(x, y) { return "M" + x + "," + y }
+                        function lineTo(x, y) { return "L" + x + "," + y }
+
+                        function arrow(size) {
+                            return [
+                                moveTo(0, -size),
+                                lineTo(size * 2, 0),
+                                lineTo(0, size),
+                            ].join("")
+                        }
+
+                        svg.selectAll("marker")
+                            .transition()
+                            .attr("viewBox", viewBox(0, -size, size * 2, size * 2))
+                            .attr("refX", size * 2)
+                            .attr("refY", 0)
+                            .attr("markerWidth", size * 2)
+                            .attr("markerHeight", size * 2);
+
+                        svg.selectAll("marker path")
+                            .transition()
+                            .attr("d", arrow(size));
+                    },
+
+                    _setupMarkers: function (size) {
+
+                        svg.append("defs").selectAll("marker")
+                            .data(["default", "dependency", "dependants"])
+                            .enter().append("marker")
+                            .attr("id", (d) => d)
+                            .attr("orient", "auto")
+                            .attr("class", "marker")
+                            .append("path");
+
+                        this.updateMarkers(size);
+                    },
+
+                    _setupLinks: function () {
+                        svg.append("g").selectAll("path")
+                            .data(this.d3graph.links)
+                            .enter().append("path")
+                            .attr("class", "link")
+                            .attr("marker-end", "url(#default)")
+                            .style("stroke-width", (d) => d);
+
+                        this._link = svg.selectAll("path.link")
+                    },
+
+                    _d3graphAllNodes: function () { return this.d3graph.nodes },
+                    _d3graphNodes: function (type) { return this.d3graph.nodes.filter(node => node.type === type) },
+                    _d3graphNodesSkipped: function (type) { return this.d3graph.nodes.filter(node => node.type !== type) },
+
+                    _setupNodes: function () {
+
+                        svg.append("g").selectAll(".node")
+                            .data(this._d3graphNodesSkipped("struct"))
+                            .enter()
+                            .append("circle")
+                            .attr("class", "node")
+                            .attr("r", this._radius)
+                            .style("stroke-dasharray", d => d.type === "protocol" ? [5, 5] : "")  // TODO: Move to styling
+                            .style("stroke-width", d => d.type === "protocol" ? 5 : 1);           // TODO: Move to styling
+
+                        svg.append("g").selectAll(".structNode")
+                            .data(this._d3graphNodes("struct"))
+                            .enter()
+                            .append("polygon")
+                            .attr("class", "structNode")
+                            .attr("points", this._structurePoints)
+                            .style("stroke-width", 1);
+
+
+                        this.objectNodes = svg.selectAll('.node, .structNode');
+                        // Setting up source/ dest and coloring
+
+                        this.objectNodes
+                            .style("fill", d => this.color(d.group))
+                            .attr("source", d => d.source)
+                            .attr("dest", d => d.dest);
+
+                        this._node = svg.selectAll('.node');
+                        this._structNode = svg.selectAll('.structNode');
+
+                    }.bind(visualizer),
+
+                    _radius: function (node) {
+                        return config.default_circle_radius + config.default_circle_radius * node.source / 10;
+                    },
+
+                    _setupSimulation: function () {
+
+                        this.simulation = d3.forceSimulation(d3.values(d3graph.nodes))
+                            .force("x", d3.forceX())
+                            .force("y", d3.forceY())
+                            .force("center", d3.forceCenter(x / 2, y / 2)) // TODO Move to somewhere else?
+                            .force("charge", d3.forceManyBody().strength(this._chargeStrength))
+                            .force("link", d3.forceLink(d3graph.links)
+                                .distance(this._linkDistance)
+                                .strength(this._linkStrength)
+                            )
+                            .on("tick", this._ticked);
+
+                    },
+
+                    _linkDistance: function (link) {
+                        if (link.source.filtered || link.target.filtered) {
+                            return 500;
+                        }
+                        return this._radius(link.source) + this._radius(link.target) + this.config.default_link_distance;
+                    }.bind(visualizer),
+
+                    _linkStrength: function (link) {
+                        if (link.source.filtered || link.target.filtered) {
+                            return 0.01;
+                        }
+                        return config.default_link_strength;
+                    },
+
+                    _chargeStrength: function (node) {
+                        if (node.filtered) {
+                            return -0.01;
+                        }
+                        return -node.weight * config.charge_multiplier;
+                    },
+
+                    _structurePoints: function (d) {
+                        let r = this._radius(d);
+                        let pts = [
+                            { x: -r, y: 0 },
+                            { x: -r * 0.707, y: -r * 0.707 },
+                            { x: 0, y: -r },
+                            { x: r * 0.707, y: -r * 0.707 },
+                            { x: r, y: 0 },
+                            { x: r * 0.707, y: r * 0.707 },
+                            { x: 0, y: r },
+                            { x: -r * 0.707, y: r * 0.707 },
+                        ];
+
+                        return pts.map(p => p.x + "," + p.y).join(" ")
+                    }.bind(visualizer),
+
+                    updateRadiuses: function (value) {
+
+                        this._node.transition().attr("r", this._radius);
+                        this._structNode.transition().attr("points", this._structurePoints);
+
+                        this.updateMarkers(value / 3);
+                        this.simulation.alphaTarget(0.3).restart()
+                    },
+
+                    reapply_charge_and_links: function () {
+                        this.reapply_charge();
+                        this.reapply_links_strength()
+                    },
+
+                    reapply_charge: function (value) {
+                        config.charge_multiplier = setDefaultValue(value, config.charge_multiplier);
+                        this.simulation.force("charge", d3.forceManyBody().strength(this._chargeStrength));
+                        this.simulation.alphaTarget(0.3).restart()
+                    },
+
+                    updateTextVisibility: function (visible) {
+                        this.config.show_texts_near_circles = visible;
+                        this._textNode.attr("visibility", visible ? "visible" : "hidden");
+                        this.simulation.alphaTarget(0.3).restart()
+                    },
+
+                    reapply_links_strength: function (linkStrength) {
+                        config.default_link_strength = setDefaultValue(linkStrength, config.default_link_strength);
+                        this.simulation.force("link", d3.forceLink(d3graph.links)
+                            .distance(this._linkDistance)
+                            .strength(this._linkStrength)
+                        );
+                        this.simulation.alphaTarget(0.3).restart()
+                    },
+
+                    updateCenter: function (x, y) {
+                        this.simulation.force("center", d3.forceCenter(x / 2, y / 2))
+                    },
+
+                    _setupDragging: function () {
+                        let dragstarted = function (d) {
+                            if (!d3.event.active) this.simulation.alphaTarget(0.3).restart();
+                            d.fx = d.x;
+                            d.fy = d.y;
+                        }.bind(visualizer);
+
+                        let dragged = function (d) {
+                            d.fx = d3.event.x;
+                            d.fy = d3.event.y;
+                        }.bind(visualizer);
+
+                        let dragended = function (d) {
+                            if (!d3.event.active) this.simulation.alphaTarget(0);
+                            if (!d.fixed) {
+                                d.fx = null;
+                                d.fy = null;
+                            }
+                        }.bind(visualizer);
+
+                        this.objectNodes
+                            .call(d3.drag()
+                                .on("start", dragstarted)
+                                .on("drag", dragged)
+                                .on("end", dragended));
+                    },
+
+                    _setupTexts: function () {
+                        svg.append("g").selectAll("text")
+                            .data(this.simulation.nodes())
+                            .enter()
+                            .append("text")
+                            .attr("visibility", "hidden")
+                            .text(d => d.name.substring(0, this.config.default_max_texts_length));
+
+                        this._textNode = svg.selectAll("text");
+                    },
+
+                    _link_line: function (d) {
+                        const dx = d.target.x - d.source.x,
+                            dy = d.target.y - d.source.y,
+                            dr = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dr === 0) { return "M0,0L0,0" }
+
+                        const rsource = this._radius(d.sourceNode) / dr;
+                        const rdest = this._radius(d.targetNode) / dr;
+                        const startX = d.source.x + dx * rsource;
+                        const startY = d.source.y + dy * rsource;
+
+                        const endX = d.target.x - dx * rdest;
+                        const endY = d.target.y - dy * rdest;
+                        return "M" + startX + "," + startY + "L" + endX + "," + endY;
+                    }.bind(visualizer),
+
+                    setupZoom: function (container) {
+                        const w = window,
+                            d = document,
+                            e = d.documentElement,
+                            g = d.getElementsByTagName('body')[0],
+                            x = w.innerWidth || e.clientWidth || g.clientWidth,
+                            y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+                        const zoom = d3.zoom()
+                            .on("zoom", function () { svg.attr("transform", d3.event.transform) });
+
+                        container.append("rect")
+                            .attr("width", x)
+                            .attr("height", y)
+                            .style("fill", "none")
+                            .style("pointer-events", "all")
+                            .lower()
+                            .call(zoom);
+                    },
+
+                    _transform: function (d) {
+                        return "translate(" + d.x + "," + d.y + ")";
+                    },
+
+
+                    _ticked: function () {
+                        this._link.attr("d", this._link_line);
+                        this._node.attr("transform", this._transform);
+                        this._structNode.attr("transform", this._transform);
+                        if (config.show_texts_near_circles) {
+                            this._textNode.attr("transform", this._transform);
+                        }
+                    }.bind(visualizer),
+
+                    _setupColors: function () {
+                        // https://github.com/mbostock/d3/wiki/Ordinal-Scales#categorical-colors
+                        this.color = d3.scaleOrdinal(d3.schemeCategory10);
+                    },
+
+                    _setupAllNodes: function () {
+                        this.allNodes = svg.select(".node, .structNode, text")
+                    },
+                    initialize: function () {
+                        this._setupColors();
+                        this._setupMarkers(this.config.default_circle_radius / 3);
+                        this._setupLinks();
+                        this._setupNodes();
+                        this._setupSimulation();
+                        this._setupTexts();
+                        this._setupDragging();
+                        this._setupAllNodes();
+                    }
+                });
+                return visualizer
+
+            }
+        };
+
+
+        function setDefaultValue(value, defaultValue) {
+            return (value === undefined) ? defaultValue : value;
+        }
+    </script>
+    <script>
+
+        //  ===================================================
+        //  =============== CONFIGURABLE PARAMS  ==============
+        //  ===================================================
+
+        let config = dvconfig.create();
+
+        const dvgraph = objcdv.parse_dependencies_graph(dependencies);
+        const d3graph = dvgraph.d3jsGraph();
+
+        var w = window,
+            d = document,
+            e = d.documentElement,
+            g = d.getElementsByTagName('body')[0],
+            x = w.innerWidth || e.clientWidth || g.clientWidth,
+            y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+        //  ===================================================
+        //  =============== http://d3js.org/ Magic ===========
+        //  ===================================================
+
+        const container = d3.select("#chart").append("svg")
+            .attr("width", x)
+            .attr("height", y)
+            .style("overflow", "hidden");
+
+        const svg = container.append('g');
+        const actions = graph_actions.create(svg, dvgraph);
+        let visualizer = dvvisualizer.create(svg, config, d3graph);
+        visualizer.initialize();
+        visualizer.setupZoom(container);
+
+        //  ===================================================
+        //  ===============  NODES SETUP     ==================
+        //  ===================================================
+
+        // Handling pressing
+        visualizer.objectNodes
+            .on("click", d => {
+                if (d3.event.defaultPrevented) { return }
+                actions.selectNodesStartingFromNode(d, 1);
+                visualizer.reapply_charge_and_links()
+            })
+            .on("contextmenu", d => {
+                if (d3.event.defaultPrevented) { return }
+                // Don't actually show context menu
+                d3.event.preventDefault();
+
+                actions.selectNodesStartingFromNode(d);
+                visualizer.reapply_charge_and_links()
+            });
+
+
+        /*
+         Window resize update
+         */
+        w.onresize = () => {
+            x = w.innerWidth || e.clientWidth || g.clientWidth;
+            y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+            container.attr("width", Math.ceil(x)).attr("height", Math.ceil(y));
+            visualizer.updateCenter(x / 2, y / 2);
+        };
+    </script>
+
+    <script>
+        //  ===================================================
+        //  =============== INPUTS HANDLING      ==============
+        //  ===================================================
+        d3.selectAll("input").on("change", function change() {
+
+            if (this.name === "circle_size") {
+                config.default_circle_radius = parseInt(this.value);
+                visualizer.updateRadiuses(parseInt(this.value));
+            }
+
+            if (this.name === "charge_multiplier") {
+                let chargeMultiplier = parseInt(this.value);
+                visualizer.reapply_charge(chargeMultiplier)
+            }
+
+            if (this.name === "link_strength") {
+                let linkStrength = parseInt(this.value) / 10;
+                visualizer.reapply_links_strength(linkStrength)
+            }
+
+            if (this.name === "show_texts_near_circles") {
+                visualizer.updateTextVisibility(this.checked)
+            }
+        });
+    </script>
+
+    <script>
+        //  ===================================================
+        //  =============== LIVE FILTERING      ==============
+        //  ===================================================
+
+        function live_filter_graph(regexp, classname, invert) {
+            classname = setDefaultValue(classname, "filtered");
+            invert = setDefaultValue(invert, false);
+
+            const re = new RegExp(regexp, "i");
+            visualizer.allNodes
+                .classed(classname, node => {
+                    let filtered = !node.name.match(re);
+                    filtered = invert ? !filtered : filtered;
+                    node.filtered = filtered;
+                    node.neighbours = !filtered;
+                    return filtered;
+                })
+                .transition();
+
+            svg.selectAll('.link')
+                .classed(classname, l => {
+                    let filtered = !(l.sourceNode.name.match(re) && l.targetNode.name.match(re));
+                    filtered = invert ? !filtered : filtered;
+                    return filtered;
+                })
+                .attr("marker-end", l => {
+                    let filtered = !(l.sourceNode.name.match(re) && l.targetNode.name.match(re));
+                    filtered = invert ? !filtered : filtered;
+                    return filtered ? "" : "url(#default)"
+                })
+                .transition()
+        }
+
+        d3.select("#search_input").on("input", function () {
+            // Filter all items
+            console.log("Input changed to" + this.value);
+            actions.deselect_selected_node();
+
+            if (this.value && this.value.length) {
+                live_filter_graph(this.value, "filtered");
+            }
+            visualizer.reapply_charge_and_links();
+        });
+    </script>

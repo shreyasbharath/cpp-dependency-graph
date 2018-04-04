@@ -17,7 +17,9 @@ This tool aims to -
 
 ## Inspiration
 
-This tool is inspired by a number of projects [rubrowser](http://www.emadelsaid.com/rubrowser/) and [cpp-dependencies](https://github.com/tomtom-international/cpp-dependencies) and [objc-dependency-visualizer](https://github.com/PaulTaykalo/objc-dependency-visualizer).
+This tool is inspired by a number of projects [rubrowser](http://www.emadelsaid.com/rubrowser/), [cpp-dependencies](https://github.com/tomtom-international/cpp-dependencies) and [objc-dependency-visualizer](https://github.com/PaulTaykalo/objc-dependency-visualizer).
+
+The pretty `d3` visualisations are directly copied from `objc-dependency-visualiser`.
 
 A huge shout out to the poeple behind these projects.
 
@@ -31,11 +33,13 @@ A huge shout out to the poeple behind these projects.
 
 To generate the overall component depenency graph for a project, use it like so -
 
-`cpp_dependency_graph generate_graph -r spec\test\example_project\ -o deps.dot`
+`cpp_dependency_graph visualise -r spec\test\example_project\ -o deps.dot -f dot`
 
-Below is the overall componet dependency graph for [leveldb](https://github.com/google/leveldb)
+Below is the overall `dot` and `d3` component dependency visualisations for [leveldb](https://github.com/google/leveldb)
 
-![Overall component graph of leveldb](examples/leveldb_overall.png)
+![Dot](examples/leveldb_overall.png)
+
+![D3 Force Directed Graph](examples/leveldb_overall_d3.png)
 
 **NOTE** - If your project has a large number of components (> 100 and lots of connections between them), then generation (and subsequent rendering) may take some time.
 
@@ -43,25 +47,25 @@ Below is the overall componet dependency graph for [leveldb](https://github.com/
 
 This will highlight the dependencies coming in and going out of a specific component. This allows you to filter out extraneous detail and study individual components in more detail.
 
-`cpp_dependency_graph generate_graph -r spec\test\example_project\ -c Engine -o deps.dot`
+`cpp_dependency_graph visualise -r spec\test\example_project\ -c Engine -o deps.dot -f dot`
 
 Here's a component graph generated for the `queue` component in [rethinkdb](https://github.com/rethinkdb/rethinkdb)
 
-![Queue component graph of rethinkdb](examples/rethinkdb_queue_component.png)
+![Queue component dot visualisation](examples/rethinkdb_queue_component.png)
 
-Here's a component graph generated for the `table` component in [rocksdb](https://github.com/facebook/rocksdb)
-
-![Table component graph of rethinkdb](examples/rocksdb_table_component.png)
+![Queue component d3 visualisation](examples/rethinkdb_queue_component_d3.png)
 
 ### Component include dependency graph
 
 This will highlight dependencies of includes within a specific component
 
-`cpp_dependency_graph generate_graph -r spec\test\example_project\ -c Engine --include -o deps.dot`
+`cpp_dependency_graph visualise_includes -r spec\test\example_project\ -c Engine`
 
 Here's a component include graph generated for the `queue` component in [rethinkdb](https://github.com/rethinkdb/rethinkdb)
 
-![Queue include graph of rethinkdb](examples/rethinkdb_queue_include.png)
+![Queue include graph dot](examples/rethinkdb_queue_include.png)
+
+![Queue include graph d3](examples/rethinkdb_queue_include_d3.png)
 
 ## Development
 
