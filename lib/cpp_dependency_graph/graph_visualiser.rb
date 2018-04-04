@@ -24,27 +24,20 @@ class GraphVisualiser
   end
 
   def generate_html_file(deps, file)
-    nodes = []
-    deps.each do |_, value|
-      node = { name: value.label }
-      nodes.append(node)
-      value.links.each do |other_node_name|
-        other_node = { name: other_node_name }
-        nodes.append(other_node)
-      end
-    end
-    nodes.uniq!
-    puts JSON.pretty_generate(nodes)
+    node_names = deps.flat_map do |_, links|
+                   links.map { |link| [link.source, link.target] }.flatten
+                 end.uniq
+    nodes = node_names.map { |name| { name: name } }
 
-    connections = []
-    deps.each do |_, value|
-      value.links.each do |other_node_name|
-        connection = { source: value.label, target: other_node_name }
-        connections.append(connection)
-      end
-    end
+    connections = deps.flat_map do |_, links|
+                    links.map do |link|
+                      { source: link.source, dest: link.target }
+                    end
+                  end
 
-    puts JSON.pretty_generate(connections)
+    json_nodes = JSON.pretty_generate(nodes)
+    json_connections = JSON.pretty_generate(connections)
+    File.write(file, json_nodes + json_connections)
   end
 
   private

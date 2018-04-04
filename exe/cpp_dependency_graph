@@ -23,30 +23,31 @@
 #++
 
 require 'docopt'
-require 'ostruct'
 require 'cpp_dependency_graph'
 
-require 'ruby-prof'
+# require 'ruby-prof'
 
 include CppDependencyGraph
 
-RubyProf.start
+# RubyProf.start
 
 doc = <<DOCOPT
+  Cpp Dependency Graph
+
   Usage:
-    #{__FILE__} list_components --root_dir <argument> [--output_file <file>]
-    #{__FILE__} generate_graph --root_dir <argument> [--component <component>] [--include] --output_file <file> [--output_format <format>]
-    #{__FILE__} cyclic_dependencies --root_dir <argument> [--component <component>] [--include] [--output_file <file>]
-    #{__FILE__} -h | --help | -v | --version
+    cpp_dependency_graph visualise --root_dir <argument> [--component <component>] [--output_file <file>] [--output_format <format>]
+    cpp_dependency_graph visualise_includes --root_dir <argument> --component <component> [--output_file <file>] [--output_format <format>]
+    cpp_dependency_graph visualise_components --root_dir <argument> [--output_file <file>] [--output_format <format>]
+    cpp_dependency_graph visualise_cyclic_deps --root_dir <argument> [--component <component>] [--output_file <file>] [--output_format <format>]
+    cpp_dependency_graph -h | --help | -v | --version
 
   Options:
     -h --help                   show this help message and exit
     -v --version                show version and exit
     -r --root_dir dir           top level root directory of C/C++ project
-    -c --component component    component to analyse and generate graph for (case sensitive!)
-    --include                   generate internal include dependency diagram for specified component
-    -o --output_file file       name of output graph file to be generated
-    --output_format format      format of output file (one of dot or html)
+    -c --component component    component generate visualisation for (case sensitive!)
+    -o --output_file file       name of output file to be generated [default: deps.html]
+    -f --output_format format   format of output file (dot, html, graphml, json) [default: html]
 DOCOPT
 
 begin
@@ -62,31 +63,25 @@ begin
     Kernel.exit(1)
   end
 
-  options = OpenStruct.new
-  options.project_dir = args['--root_dir'].gsub(/\\/,'/')
-  options.component = args['--component']
-  options.include_diagram = args['--include']
-  options.output_file = args['--output_file']
+  project_dir = args['--root_dir'].gsub(/\\/,'/')
 
-  if args['generate_graph']
-    if options.component
-      if options.include_diagram
-        generate_component_include_graph(options.project_dir, options.component, options.output_file)
-      else
-        generate_component_graph(options.project_dir, options.component, options.output_file)
-      end
+  if args['visualise']
+    if args['--component']
+      generate_component_graph(project_dir, args['--component'], args['--output_format'], args['--output_file'])
     else
-      generate_project_graph(options.project_dir, options.output_file)
+      generate_project_graph(project_dir, args['--output_format'], args['--output_file'])
     end
-  elsif args['list_components']
-    # TODO: List all components
-  elsif args['cyclic_dependencies']
-    output_cyclic_dependencies(options.project_dir)
+  elsif args['visualise_includes']
+    generate_component_include_graph(project_dir, args['--component'], args['--output_format'], args['--output_file'])
+  elsif args['visualise_components']
+    # TODO: Output components
+  elsif args['visualise_cyclic_deps']
+    output_cyclic_dependencies(project_dir)
   end
 rescue Docopt::Exit => e
   puts e.message
 end
 
-result = RubyProf.stop
-printer = RubyProf::CallTreePrinter.new(result)
-printer.print(path: '.', profile: 'callgrind')
+# result = RubyProf.stop
+# printer = RubyProf::CallTreePrinter.new(result)
+# printer.print(path: '.', profile: 'cpp_dependency_graph')

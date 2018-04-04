@@ -2,6 +2,8 @@
 
 - [ ] Documentation
   - [ ] Screencast of how to use tool on projects
+- [ ] Progress messages
+  - [ ] Progress bar?
 - [x] Allow user to specify a single component and the tool should print only that component
 - [x] Print out dependency graphs for all components by default if no single component is specified
 - [ ] Use a compiler to get the includes for a file rather than manually scanning the contents
@@ -26,7 +28,7 @@
   - [ ] Highlight strongly coupled components (i.e. have lots of outgoing/incoming dependencies). How to visualise strongly coupled components?
   - [ ] Interface vs implementation coupling (interface is worse!). Highlighting interface vs implementation coupling between components on graph?
   - [ ] Look at using subgraphs of the dot/svg language to cluster component dependencies in the graph
-  - [ ] Node size - base it on how many source files (or lines of code)
+  - [ ] Node size - base it on how many source files (or lines of code) or how many connections going in/out of node?
   - [ ] Provide a 'zoom' slider on the visualisation to zoom in/out of the view (high level dependencies to low-level dependencies)
   - [ ] Visualise components matching user provided regex only
   - [ ] 3D visualisation using something like https://github.com/ggeoffrey/cljs-gravity

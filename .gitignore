@@ -13,4 +13,7 @@
 deps.png
 deps.dot
 deps.html
+deps.json
+deps.graphml
 index.html
+cpp_dependency_graph.callgrind.out*
