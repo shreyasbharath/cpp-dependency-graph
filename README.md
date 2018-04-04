@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Build Status](https://travis-ci.org/shreyasbharath/cpp_dependency_graph.svg?branch=master)](https://travis-ci.org/shreyasbharath/cpp_dependency_graph) [![Maintainability](https://api.codeclimate.com/v1/badges/2a07b587ca6fc8b1b3db/maintainability)](https://codeclimate.com/github/shreyasbharath/cpp_dependency_graph/maintainability) [![Codacy](https://api.codacy.com/project/badge/Grade/9439dbb7fde44b5380401acba5325e62)](https://www.codacy.com/app/shreyasbharath/cpp_dependency_graph?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=shreyasbharath/cpp_dependency_graph&amp;utm_campaign=Badge_Grade) [![Test Coverage](https://api.codeclimate.com/v1/badges/2a07b587ca6fc8b1b3db/test_coverage)](https://codeclimate.com/github/shreyasbharath/cpp_dependency_graph/test_coverage) [![Release](https://img.shields.io/github/release/shreyasbharath/cpp_dependency_graph.svg?maxAge=3600)](https://github.com/shreyasbharath/cpp_dependency_graph/releases)
 
-Generates useful dependency graphs to study the architecture of a C/C++ codebase.
+Generates useful component dependency visualisations (in `dot` or `d3.js`) to study the architecture of C/C++ projects.
 
 Why do all the other languages have awesome tools to analyse codebases but C/C++ codebases do not?
 
@@ -49,7 +49,7 @@ This will highlight the dependencies coming in and going out of a specific compo
 
 `cpp_dependency_graph visualise -r spec\test\example_project\ -c Engine -o deps.dot -f dot`
 
-Here's a component graph generated for the `queue` component in [rethinkdb](https://github.com/rethinkdb/rethinkdb)
+Here's a component dependency visualisation generated for the `queue` component in [rethinkdb](https://github.com/rethinkdb/rethinkdb)
 
 ![Queue component dot visualisation](examples/rethinkdb_queue_component.png)
 
@@ -61,7 +61,7 @@ This will highlight dependencies of includes within a specific component
 
 `cpp_dependency_graph visualise_includes -r spec\test\example_project\ -c Engine`
 
-Here's a component include graph generated for the `queue` component in [rethinkdb](https://github.com/rethinkdb/rethinkdb)
+Here's a component include dependency visualisation generated for the `queue` component in [rethinkdb](https://github.com/rethinkdb/rethinkdb)
 
 ![Queue include graph dot](examples/rethinkdb_queue_include.png)
 
@@ -69,7 +69,7 @@ Here's a component include graph generated for the `queue` component in [rethink
 
 ## Development
 
-`bundle exec cpp_dependency_graph -r <dir> -c <component_name> -o <output_file>`
+`bundle exec cpp_dependency_graph visualise -r <dir>`
 
 ## License
 
