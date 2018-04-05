@@ -21,7 +21,7 @@ This tool is inspired by a number of projects [rubrowser](http://www.emadelsaid.
 
 The pretty `d3` visualisations are directly copied from `objc-dependency-visualiser`.
 
-A huge shout out to the poeple behind these projects.
+A huge shout out to the people behind these projects.
 
 ## Usage
 

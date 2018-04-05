@@ -39,7 +39,8 @@ class GraphVisualiser
     json_connections = JSON.pretty_generate(connections)
     # File.write(file, json_nodes + json_connections)
 
-    template = File.read('views/index.html.template')
+    template_file = resolve_file_path('views/index.html.template')
+    template = File.read(template_file)
     contents = template % { dependency_links: json_connections }
     File.write(file, contents)
   end
@@ -50,5 +51,9 @@ class GraphVisualiser
     node = @g.add_node(name)
     node.attributes[:shape] = 'box3d'
     node
+  end
+
+  def resolve_file_path(path)
+    File.expand_path("../../../#{path}", __FILE__)
   end
 end
