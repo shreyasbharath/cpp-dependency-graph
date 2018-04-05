@@ -11,10 +11,10 @@ Gem::Specification.new do |s|
   s.authors = ['Shreyas Balakrishna']
   s.email = ['shreyasbharath@users.noreply.github.com>']
   s.summary = <<-SUMMARY
-  CppDependencyGraph is a program that generates dependency graphs to study the architecture of a C/C++ codebase
+  CppDependencyGraph is a program that generates dependency visualisations (dot, d3.js) to study the architecture of C/C++ projects
   SUMMARY
   s.description = <<-DESCRIPTION
-  Generates interactive dependency graphs to study the architecture of a C/C++ project in detail
+  Generates interactive dependency visualisations (dot, d3.js) to study the architecture of C/C++ projects in detail
   DESCRIPTION
   s.homepage = 'https://github.com/shreyasbharath/cpp_dependency_graph'
   s.licenses = ['MIT']
