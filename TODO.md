@@ -31,6 +31,7 @@
   - [ ] Highlight strongly coupled components (i.e. have lots of outgoing/incoming dependencies). How to visualise strongly coupled components?
   - [ ] Interface vs implementation coupling (interface is worse!). Highlighting interface vs implementation coupling between components on graph?
   - [ ] Look at using subgraphs of the dot/svg language to cluster component dependencies in the graph
+  - [ ] Create a d3 donut graph with relative sizes of components in project? This'll probably show which components need to be further split up (something like this https://blog.kathyreid.id.au/2016/12/29/linux-australia-expense-breakdown-a-data-visualisation-in-d3-js/)
   - [ ] Node size - base it on how many source files (or lines of code) or how many connections going in/out of node?
   - [ ] Provide a 'zoom' slider on the visualisation to zoom in/out of the view (high level dependencies to low-level dependencies)
   - [ ] Visualise components matching user provided regex only

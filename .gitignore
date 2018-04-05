@@ -15,5 +15,6 @@ deps.dot
 deps.html
 deps.json
 deps.graphml
+deps.svg
 index.html
 cpp_dependency_graph.callgrind.out*

@@ -37,9 +37,11 @@ To generate the overall component depenency graph for a project, use it like so 
 
 Below is the overall `dot` and `d3` component dependency visualisations for [leveldb](https://github.com/google/leveldb)
 
-![Dot](examples/leveldb_overall.png)
+![Dot](examples/leveldb_overall.svg)
 
-![D3 Force Directed Graph](examples/leveldb_overall_d3.png)
+![d3.js visualisation of leveldb](examples/leveldb_overall_d3.svg)
+
+![d3.js visualisation of rocksdb](examples/rocksdb_overall_d3.svg)
 
 **NOTE** - If your project has a large number of components (> 100 and lots of connections between them), then generation (and subsequent rendering) may take some time.
 
@@ -51,9 +53,9 @@ This will highlight the dependencies coming in and going out of a specific compo
 
 Here's a component dependency visualisation generated for the `queue` component in [rethinkdb](https://github.com/rethinkdb/rethinkdb)
 
-![Queue component dot visualisation](examples/rethinkdb_queue_component.png)
+![Queue component dot visualisation](examples/rethinkdb_queue_component.svg)
 
-![Queue component d3 visualisation](examples/rethinkdb_queue_component_d3.png)
+![Queue component d3 visualisation](examples/rethinkdb_queue_component_d3.svg)
 
 ### Component include dependency graph
 
@@ -63,9 +65,9 @@ This will highlight dependencies of includes within a specific component
 
 Here's a component include dependency visualisation generated for the `queue` component in [rethinkdb](https://github.com/rethinkdb/rethinkdb)
 
-![Queue include graph dot](examples/rethinkdb_queue_include.png)
+![Queue include graph dot](examples/rethinkdb_queue_include.svg)
 
-![Queue include graph d3](examples/rethinkdb_queue_include_d3.png)
+![Queue include graph d3](examples/rethinkdb_queue_include_d3.svg)
 
 ## Development
 

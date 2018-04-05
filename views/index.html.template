@@ -144,6 +144,7 @@
     <script type="text/javascript" src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/underscore@1.8.3/underscore-min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/d3@4.7.4/build/d3.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/edeno/d3-save-svg/gh-pages/assets/d3-save-svg.min.js"></script>
 
     <!-- ================================================= -->
     <!-- ===========ACTUAL HTML           ================ -->
@@ -165,6 +166,8 @@
         <input id="search_input" placeholder="Type regexp to filter nodes" style="width:100%%;">
         <br>
     </form>
+
+    <button id="export">Export as SVG</button>
 
     <div id="chart">
         <!-- Here the SVG will be placed-->
@@ -976,5 +979,12 @@
                 live_filter_graph(this.value, "filtered");
             }
             visualizer.reapply_charge_and_links();
+        });
+
+        d3.select('#export').on('click', function() {
+        var config = {
+            filename: 'deps',
+        }
+        d3_save_svg.save(d3.select('svg').node(), config);
         });
     </script>
