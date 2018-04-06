@@ -31,7 +31,6 @@ class SourceComponent
 
   def parse_source_files(extensions)
     path = File.join(@path, File::SEPARATOR) + '*' + extensions
-    files = Dir.glob(path).select { |e| File.file?(e) }
-    files.map { |file| SourceFile.new(file) }
+    Dir.glob(path).map { |e| SourceFile.new(e) if File.file?(e) }.compact
   end
 end

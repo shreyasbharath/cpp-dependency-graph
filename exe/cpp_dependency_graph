@@ -25,11 +25,11 @@
 require 'docopt'
 require 'cpp_dependency_graph'
 
-# require 'ruby-prof'
+require 'ruby-prof'
 
 include CppDependencyGraph
 
-# RubyProf.start
+RubyProf.start
 
 doc = <<DOCOPT
   Cpp Dependency Graph
@@ -82,6 +82,6 @@ rescue Docopt::Exit => e
   puts e.message
 end
 
-# result = RubyProf.stop
-# printer = RubyProf::CallTreePrinter.new(result)
-# printer.print(path: '.', profile: 'cpp_dependency_graph')
+result = RubyProf.stop
+printer = RubyProf::CallTreePrinter.new(result)
+printer.print(path: '.', profile: 'cpp_dependency_graph')

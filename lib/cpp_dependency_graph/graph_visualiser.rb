@@ -8,7 +8,7 @@ class GraphVisualiser
     @g = Graphviz::Graph.new(name = 'dependency_graph')
 
     node_names = deps.flat_map do |_, links|
-                   links.map { |link| [link.source, link.target] }.flatten
+                   links.map { |link| [link.source, link.target] }
                  end.uniq
     nodes = node_names.map { |name| [name, create_node(name)] }.to_h
 
@@ -25,7 +25,7 @@ class GraphVisualiser
 
   def generate_html_file(deps, file)
     node_names = deps.flat_map do |_, links|
-                   links.map { |link| [link.source, link.target] }.flatten
+                   links.map { |link| [link.source, link.target] }
                  end.uniq
     nodes = node_names.map { |name| { name: name } }
 

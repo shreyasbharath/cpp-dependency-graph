@@ -19,9 +19,13 @@ RSpec.describe DependencyGraph do
     expect(dependency_graph.all_component_links).to eq(expected_links)
   end
 
+  it 'returns empty links for an unknown component of a project' do
+    expect(dependency_graph.component_links('Blah').empty?).to eq(true)
+  end
+
   it 'returns links for a specified component of a project' do
     expected_links = {}
-    expected_links['UI'] = [ComponentLink.new('UI', 'Engine', false)]   # TODO
+    expected_links['UI'] = [ComponentLink.new('UI', 'Engine', true)]
     expected_links['Engine'] = [ComponentLink.new('Engine', 'Framework', false),
                       ComponentLink.new('Engine', 'UI', true),
                       ComponentLink.new('Engine', 'DataAccess', false)]
