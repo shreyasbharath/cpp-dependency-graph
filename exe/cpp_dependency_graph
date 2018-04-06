@@ -58,12 +58,12 @@ begin
     Kernel.exit(0)
   end
 
-  unless File.directory?(args['--root_dir'])
+  project_dir = args['--root_dir'].gsub(/\\/,'/')
+
+  unless File.directory?(project_dir)
     puts('Not a valid project source directory')
     Kernel.exit(1)
   end
-
-  project_dir = args['--root_dir'].gsub(/\\/,'/')
 
   if args['visualise']
     if args['--component']
@@ -76,7 +76,7 @@ begin
   elsif args['visualise_components']
     # TODO: Output components
   elsif args['visualise_cyclic_deps']
-    output_cyclic_dependencies(project_dir)
+    generate_cyclic_dependencies(project_dir, args['--output_format'], args['--output_file'])
   end
 rescue Docopt::Exit => e
   puts e.message

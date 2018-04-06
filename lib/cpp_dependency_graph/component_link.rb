@@ -21,6 +21,15 @@ class ComponentLink
     @cyclic
   end
 
+  def ==(other)
+    (source == other.source && target == other.target && cyclic? == other.cyclic?) ||
+    (source == other.target && target == other.source && cyclic? == other.cyclic?)
+  end
+
+  def hash
+    [source, target, cyclic?].to_set.hash
+  end
+
   def to_s
     if cyclic?
       "#{source} <-> #{target}"

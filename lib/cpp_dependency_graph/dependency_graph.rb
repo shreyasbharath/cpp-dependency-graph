@@ -18,6 +18,10 @@ class DependencyGraph
     @all_component_links ||= build_hash_component_links
   end
 
+  def all_cyclic_links
+    @cyclic_links ||= build_cyclic_links
+  end
+
   def component_links(name)
     return {} unless all_component_links.key?(name)
     incoming_links(name).merge(outgoing_links(name))
@@ -33,6 +37,11 @@ class DependencyGraph
                         [source, c_links]
                       end.to_h
     component_links
+  end
+
+  def build_cyclic_links
+    cyclic_links = all_component_links.select { |_, links| links.any? { |link| link.cyclic? } }
+    cyclic_links.each { |_, links| links.select! { |link| link.cyclic? } }
   end
 
   def outgoing_links(name)

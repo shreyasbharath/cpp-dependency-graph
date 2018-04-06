@@ -29,12 +29,11 @@ module CppDependencyGraph
     generate_visualisation(deps, format, output_file)
   end
 
-  def output_cyclic_dependencies(project_dir)
+  def generate_cyclic_dependencies(project_dir, format, file)
     project = Project.new(project_dir)
     graph = DependencyGraph.new(project)
-    deps = graph.all_component_links
-    cyclic_deps = deps.values.flatten.select { |dep| dep.cyclic? }
-    puts JSON.pretty_generate(cyclic_deps)
+    deps = graph.all_cyclic_links
+    generate_visualisation(deps, format, file)
   end
 
   def generate_visualisation(deps, format, file)
@@ -43,6 +42,8 @@ module CppDependencyGraph
       GraphVisualiser.new.generate_dot_file(deps, file)
     when 'html'
       GraphVisualiser.new.generate_html_file(deps, file)
+    when 'json'
+      File.write(file, JSON.pretty_generate(deps))
     end
   end
 end

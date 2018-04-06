@@ -16,4 +16,16 @@ RSpec.describe ComponentLink do
   it 'returns correct cyclic? attribute' do
     expect(ComponentLink.new('source', 'target', true).cyclic?).to eq(true)
   end
+
+  it 'returns equal if another instance has same attributes' do
+    c1 = ComponentLink.new('source', 'target', true)
+    c2 = ComponentLink.new('target', 'source', true)
+    expect(c1). to eq(c2)
+  end
+
+  it 'returns not equal if another instance has different attributes' do
+    c1 = ComponentLink.new('source1', 'target1', true)
+    c2 = ComponentLink.new('source2', 'target2', true)
+    expect(c1).to_not eq(c2)
+  end
 end

@@ -74,6 +74,18 @@ Here's a component include dependency visualisation generated for the `queue` co
 
 ![Queue include graph d3](examples/rethinkdb_queue_include_d3.svg)
 
+### Cyclic dependencies only graph
+
+This will highlight cyclic dependencies between components within a project. This is especially useful for targeted refactoring activities to reduce coupling between components.
+
+`cpp_dependency_graph visualise_cyclic_deps -r spec\test\example_project\`
+
+Here's the cyclic dependencies only visualisation generated for [rethinkdb](https://github.com/rethinkdb/rethinkdb) and [leveldb](https://github.com/google/leveldb)
+
+![rethinkdb](examples/rethinkdb_cyclic_deps.svg)
+
+![leveldb](examples/leveldb_cyclic_deps.svg)
+
 ## Development
 
 `bundle exec cpp_dependency_graph visualise -r <dir>`

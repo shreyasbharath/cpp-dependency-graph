@@ -3,8 +3,8 @@
 - [ ] Documentation
   - [ ] Screencast of how to use tool on projects
   - [ ] Create a github.io homepage
+  - [ ] Add interactive `html` or `svg` examples to homepage
   - [ ] Add a [CONTRIBUTING.md](https://github.com/nayafia/contributing-template/blob/master/CONTRIBUTING-template.md)
-  - [ ] Add interactive `html` or `svg` examples into README, is this possible?
 - [ ] Progress messages
   - [ ] Progress bar?
 - [x] Allow user to specify a single component and the tool should print only that component
@@ -13,6 +13,7 @@
   - [ ] Manual scanning does not work when #includes are #ifdefed out for example
   - [ ] <system> include vs "project" include (how will this work for third party sources that are not part of the codebase?)
   - [ ] Work with any type of include relative includes ('blah.h') vs absolute includes ('/path/blah.h') vs relative with path includes ('blah/blah.h')
+  - [ ] Look at https://github.com/Sarcasm/compdb to see if it can generate dependencies
 - [ ] Parallelise dependency scanning as much as possible to get the best possible performance
 - [ ] Open up the graph automatically after generating an individual graph
 - [ ] Work with any sort of project structure
