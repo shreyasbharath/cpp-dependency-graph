@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'cpp_dependency_graph/source_component'
 
 RSpec.describe SourceComponent do

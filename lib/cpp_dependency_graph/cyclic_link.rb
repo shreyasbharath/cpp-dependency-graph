@@ -2,29 +2,24 @@
 
 # A special class designed to be used as a key in a hash
 class CyclicLink
-  def initialize(nodeA, nodeB)
-    @nodeA = nodeA
-    @nodeB = nodeB
-  end
+  attr_reader :node_a
+  attr_reader :node_b
 
-  def nodeA
-    @nodeA
-  end
-
-  def nodeB
-    @nodeB
+  def initialize(node_a, node_b)
+    @node_a = node_a
+    @node_b = node_b
   end
 
   def eql?(other)
-    (@nodeA == other.nodeA && @nodeB == other.nodeB) ||
-    (@nodeA == other.nodeB && @nodeB == other.nodeA)
+    (@node_a == other.node_a && @node_b == other.node_b) ||
+      (@node_a == other.node_b && @node_b == other.node_a)
   end
 
   def hash
-    [@nodeA, @nodeB].to_set.hash
+    [@node_a, @node_b].to_set.hash
   end
 
   def to_s
-    "#{nodeA} <-> #{nodeB}"
+    "#{node_a} <-> #{node_b}"
   end
 end

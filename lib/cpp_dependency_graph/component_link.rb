@@ -2,19 +2,15 @@
 
 require 'json'
 
+# Represents a link between two entities, a source and a target
 class ComponentLink
+  attr_reader :source
+  attr_reader :target
+
   def initialize(source, target, cyclic = false)
     @source = source
     @target = target
     @cyclic = cyclic
-  end
-
-  def source
-    @source
-  end
-
-  def target
-    @target
   end
 
   def cyclic?
@@ -23,7 +19,7 @@ class ComponentLink
 
   def ==(other)
     (source == other.source && target == other.target && cyclic? == other.cyclic?) ||
-    (source == other.target && target == other.source && cyclic? == other.cyclic?)
+      (source == other.target && target == other.source && cyclic? == other.cyclic?)
   end
 
   def hash
@@ -38,9 +34,8 @@ class ComponentLink
     end
   end
 
-  def to_json(*a)
+  def to_json(*options)
     { json_class: self.class.name,
-      source: source, target: target, cyclic: cyclic?
-    }.to_json(*a)
+      source: source, target: target, cyclic: cyclic? }.to_json(*options)
   end
 end

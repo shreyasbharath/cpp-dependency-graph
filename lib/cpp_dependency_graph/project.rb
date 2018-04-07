@@ -36,10 +36,10 @@ class Project
     # TODO: Dealing with source components with same dir name?
     dirs = fetch_all_dirs(@path)
     components = dirs.map do |dir|
-                   c = SourceComponent.new(dir)
-                   [c.name, c]
-                 end.to_h
-    components.delete_if { |k, v| v.source_files.size.zero? }
+      c = SourceComponent.new(dir)
+      [c.name, c]
+    end.to_h
+    components.delete_if { |_, v| v.source_files.size.zero? }
   end
 
   def fetch_all_dirs(source_dir)

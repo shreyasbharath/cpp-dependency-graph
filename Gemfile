@@ -2,6 +2,6 @@
 
 source 'https://rubygems.org'
 
-git_source(:github) { |repo_name| 'https://github.com/shreyasbharath/cpp_dependency_graph' }
+git_source(:github) { |_| 'https://github.com/shreyasbharath/cpp_dependency_graph' }
 
 gemspec

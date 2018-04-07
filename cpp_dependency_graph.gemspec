@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'cpp_dependency_graph/version'
@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.name = 'cpp_dependency_graph'
   s.version = CppDependencyGraph::VERSION
   s.authors = ['Shreyas Balakrishna']
-  s.email = ['shreyasbharath@users.noreply.github.com>']
+  s.email = ['shreyasbharath@gmail.com']
   s.summary = <<-SUMMARY
   CppDependencyGraph is a program that generates dependency visualisations (dot, d3.js) to study the architecture of C/C++ projects
   SUMMARY
@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/shreyasbharath/cpp_dependency_graph'
   s.licenses = ['MIT']
 
-  s.files = %x[git ls-files -z].split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) } -
+  s.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) } -
             %w[.rubocop.yml .travis.yml appveyor.yml]
   s.bindir = 'exe'
   s.executables = s.files.grep(%r{^exe/}) { |f| File.basename(f) }
@@ -39,6 +39,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake', '~> 12.3'
   s.add_development_dependency 'rspec', '~> 3.7'
   s.add_development_dependency 'rubocop', '~> 0.54'
-  s.add_development_dependency 'ruby-prof', '~> 0.17'
   s.add_development_dependency 'ruby-debug-ide', '~> 0.6'
+  s.add_development_dependency 'ruby-prof', '~> 0.17'
 end

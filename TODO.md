@@ -5,6 +5,7 @@
   - [ ] Create a github.io homepage
   - [ ] Add interactive `html` or `svg` examples to homepage
   - [ ] Add a [CONTRIBUTING.md](https://github.com/nayafia/contributing-template/blob/master/CONTRIBUTING-template.md)
+  - [ ] Ruby gem docs
 - [ ] Progress messages
   - [ ] Progress bar?
 - [x] Allow user to specify a single component and the tool should print only that component
@@ -32,6 +33,8 @@
 - [ ] Visualisation
   - [ ] Highlight strongly coupled components (i.e. have lots of outgoing/incoming dependencies). How to visualise strongly coupled components?
   - [ ] Interface vs implementation coupling (interface is worse!). Highlighting interface vs implementation coupling between components on graph?
+  - [ ] Hierarchy diagram for components with no cycles? (https://bl.ocks.org/mbostock/4339184)
+  - [ ] Pack diagram for just visualising components (https://bl.ocks.org/mbostock/ca5b03a33affa4160321)
   - [ ] Look at using subgraphs of the dot/svg language to cluster component dependencies in the graph
   - [ ] Create a d3 donut graph with relative sizes of components in project? This'll probably show which components need to be further split up (something like this https://blog.kathyreid.id.au/2016/12/29/linux-australia-expense-breakdown-a-data-visualisation-in-d3-js/)
   - [ ] Node size - base it on how many source files (or lines of code) or how many connections going in/out of node?

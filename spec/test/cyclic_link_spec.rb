@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'cpp_dependency_graph/cyclic_link'
 
 RSpec.describe CyclicLink do

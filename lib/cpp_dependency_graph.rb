@@ -3,7 +3,8 @@
 require_relative 'cpp_dependency_graph/project'
 require_relative 'cpp_dependency_graph/dependency_graph'
 require_relative 'cpp_dependency_graph/include_dependency_graph'
-require_relative 'cpp_dependency_graph/graph_visualiser'
+require_relative 'cpp_dependency_graph/graph_to_dot_visualiser'
+require_relative 'cpp_dependency_graph/graph_to_html_visualiser'
 require_relative 'cpp_dependency_graph/version'
 
 # Generates dependency graphs of a project in various output forms
@@ -39,9 +40,9 @@ module CppDependencyGraph
   def generate_visualisation(deps, format, file)
     case format
     when 'dot'
-      GraphVisualiser.new.generate_dot_file(deps, file)
+      GraphToDotVisualiser.new.generate(deps, file)
     when 'html'
-      GraphVisualiser.new.generate_html_file(deps, file)
+      GraphToHtmlVisualiser.new.generate(deps, file)
     when 'json'
       File.write(file, JSON.pretty_generate(deps))
     end

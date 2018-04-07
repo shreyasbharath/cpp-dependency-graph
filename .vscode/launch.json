@@ -24,7 +24,7 @@
       "pathToBundler": "C:/tools/ruby25/bin/bundle.bat",
       "pathToRDebugIDE": "C:/tools/ruby25/bin/rdebug-ide.bat",
       "showDebuggerOutput": true,
-      "args": ["visualise", "--root_dir", "../protobuf/src"]
+      "args": ["visualise", "-r", "../TileDB", "-f", "dot"]
     },
     {
       "name": "Listen for rdebug-ide",

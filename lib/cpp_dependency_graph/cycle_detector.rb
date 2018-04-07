@@ -6,10 +6,10 @@ require_relative 'cyclic_link'
 class CycleDetector
   def initialize(component_links)
     @cyclic_links = component_links.flat_map do |source, links|
-                      links.select { |target| component_links[target].include?(source) }.map do |target|
-                        [CyclicLink.new(source, target), true]
-                      end
-                    end.to_h
+      links.select { |target| component_links[target].include?(source) }.map do |target|
+        [CyclicLink.new(source, target), true]
+      end
+    end.to_h
   end
 
   def cyclic?(source, target)

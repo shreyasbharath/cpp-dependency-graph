@@ -19,7 +19,7 @@ class SourceFile
   end
 
   def header?
-    false     # TODO: Implement check extension
+    false # TODO: Implement check extension
   end
 
   def parent_component

@@ -19,9 +19,7 @@ class IncludeToComponentResolver
 
   def component_for_include(include)
     return '' unless source_files.key?(include)
-    unless @component_include_map_cache.key?(include)
-      @component_include_map_cache[include] = component_for_include_private(include)
-    end
+    @component_include_map_cache[include] = component_for_include_private(include) unless @component_include_map_cache.key?(include)
     @component_include_map_cache[include]
   end
 
@@ -53,7 +51,7 @@ class IncludeToComponentResolver
   end
 
   def build_source_file_map
-    # TODO SourceComponent should return a hash for source files which can be merged here
+    # TODO: SourceComponent should return a hash for source files which can be merged here
     source_files = @components.values.flat_map(&:source_files)
     source_files.map { |s| [s.basename, s] }.to_h
   end

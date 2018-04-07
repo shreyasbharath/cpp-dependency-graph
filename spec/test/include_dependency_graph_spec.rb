@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'cpp_dependency_graph/include_dependency_graph'
 require 'cpp_dependency_graph/component_link'
 

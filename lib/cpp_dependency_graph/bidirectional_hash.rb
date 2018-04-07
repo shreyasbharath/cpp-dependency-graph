@@ -1,30 +1,31 @@
 # frozen_string_literal: true
 
+# Hash that allows lookup by key and value
 class BidirectionalHash
   def initialize
-    @forward = Hash.new { |h, k| h[k] = [ ] }
-    @reverse = Hash.new { |h, k| h[k] = [ ] }
+    @forward = Hash.new { |h, k| h[k] = [] }
+    @reverse = Hash.new { |h, k| h[k] = [] }
   end
 
-  def insert(k, v)
-    @forward[k].push(v)
-    @reverse[v].push(k)
-    v
+  def insert(key, value)
+    @forward[key].push(value)
+    @reverse[value].push(key)
+    value
   end
 
-  def fetch(k)
-    fetch_from(@forward, k)
+  def fetch(key)
+    fetch_from(@forward, key)
   end
 
-  def rfetch(v)
-    fetch_from(@reverse, v)
+  def rfetch(value)
+    fetch_from(@reverse, value)
   end
 
   protected
 
-  def fetch_from(h, k)
-    return nil if(!h.has_key?(k))
-    v = h[k]
+  def fetch_from(hash, key)
+    return nil unless hash.key?(key)
+    v = hash[key]
     v.length == 1 ? v.first : v.dup
   end
 end

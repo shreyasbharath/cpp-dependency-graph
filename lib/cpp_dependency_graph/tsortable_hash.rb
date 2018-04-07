@@ -2,6 +2,7 @@
 
 require 'tsort'
 
+# Hash that topologically sorts itself upon insertion of a key
 class TsortableHash < Hash
   include TSort
 

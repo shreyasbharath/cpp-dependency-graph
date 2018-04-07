@@ -2,13 +2,12 @@
 
 require_relative 'source_file'
 
+# Abstracts a source directory containing source files
 class SourceComponent
+  attr_reader :path
+
   def initialize(path)
     @path = path
-  end
-
-  def path
-    @path
   end
 
   def name
