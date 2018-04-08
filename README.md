@@ -29,6 +29,16 @@ The pretty `d3` visualisations are directly copied from `objc-dependency-visuali
 
 A huge shout out to the people behind these projects.
 
+## Comparison With Other Tools
+
+### cpp-dependencies
+
+### cinclude2dot
+
+### dep-matrix
+
+
+
 ## Usage
 
 ### Installation

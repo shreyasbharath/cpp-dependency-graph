@@ -12,6 +12,8 @@
 - [x] Allow user to specify a single component and the tool should print only that component
 - [x] Print out dependency graphs for all components by default if no single component is specified
 - [ ] Use a compiler to get the includes for a file rather than manually scanning the contents
+  - [ ] Command to generate overall file/class dependency graph if a project doesn't have many components
+  - [ ] Command to generate individual file/class dependency graph
   - [ ] Manual scanning does not work when #includes are #ifdefed out for example
   - [ ] <system> include vs "project" include (how will this work for third party sources that are not part of the codebase?)
   - [ ] Work with any type of include relative includes ('blah.h') vs absolute includes ('/path/blah.h') vs relative with path includes ('blah/blah.h')

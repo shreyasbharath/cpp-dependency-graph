@@ -76,7 +76,7 @@ begin
   elsif args['visualise_includes']
     generate_component_include_graph(project_dir, args['--component'], args['--output_format'], args['--output_file'])
   elsif args['visualise_components']
-    # TODO: Output components
+    generate_enclosure_diagram(project_dir, args['--output_file'])
   elsif args['visualise_cyclic_deps']
     generate_cyclic_dependencies(project_dir, args['--output_format'], args['--output_file'])
   end

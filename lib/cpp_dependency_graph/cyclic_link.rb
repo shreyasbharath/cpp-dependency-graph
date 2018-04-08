@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-# A special class designed to be used as a key in a hash
+require 'set'
+
+# Represents a cyclic link betwee two nodes, it is special in the sense it is designed to be used as a key in a hash
 class CyclicLink
   attr_reader :node_a
   attr_reader :node_b

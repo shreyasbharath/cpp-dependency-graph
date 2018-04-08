@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 require 'json'
+require 'set'
 
 # Represents a link between two entities, a source and a target
-class ComponentLink
+class Link
   attr_reader :source
   attr_reader :target
 
