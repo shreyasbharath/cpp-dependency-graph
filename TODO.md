@@ -6,6 +6,7 @@
   - [ ] Add interactive `html` or `svg` examples to homepage
   - [ ] Add a [CONTRIBUTING.md](https://github.com/nayafia/contributing-template/blob/master/CONTRIBUTING-template.md)
   - [ ] Ruby gem docs
+  - [ ] Add example visualisations for "good" vs "bad" architectures
 - [ ] Progress messages
   - [ ] Progress bar?
 - [x] Allow user to specify a single component and the tool should print only that component
