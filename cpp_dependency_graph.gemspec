@@ -34,11 +34,12 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'parallel', '~> 1.12'
 
   s.add_development_dependency 'bundler', '~> 1.16'
-  s.add_development_dependency 'coveralls', '~> 0.8'
   s.add_development_dependency 'debase', '~> 0.2'
   s.add_development_dependency 'rake', '~> 12.3'
   s.add_development_dependency 'rspec', '~> 3.7'
   s.add_development_dependency 'rubocop', '~> 0.54'
   s.add_development_dependency 'ruby-debug-ide', '~> 0.6'
   s.add_development_dependency 'ruby-prof', '~> 0.17'
+  s.add_development_dependency 'simplecov', '~> 0.16'
+  s.add_development_dependency 'simplecov-console', '~> 0.4'
 end

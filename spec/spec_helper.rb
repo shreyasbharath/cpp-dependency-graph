@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'simplecov'
+require 'simplecov-console'
 require 'cpp_dependency_graph'
 
 RSpec.configure do |config|
@@ -14,3 +16,6 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+SimpleCov.formatter = SimpleCov.formatter = SimpleCov::Formatter::Console
+SimpleCov.start

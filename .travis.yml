@@ -13,12 +13,21 @@ before_install:
 branches:
   only:
     - master
+env:
+  global:
+    - CC_TEST_REPORTER_ID=b32bade44482d3debfa79056a4843ba58c77802d3fb5d358be90692389eec70a
 jobs:
   include:
     - stage: test
       script: bundle exec rake rubocop
     - stage: test
+      before_script:
+        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        - chmod +x ./cc-test-reporter
+        - ./cc-test-reporter before-build
       script: bundle exec rake spec
+      after_script:
+        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
     - stage: build
       script: bundle exec rake build
     - stage: gem release

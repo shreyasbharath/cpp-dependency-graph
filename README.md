@@ -2,7 +2,12 @@
 
 <!-- [![Gem Version] -->
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Build Status](https://travis-ci.org/shreyasbharath/cpp_dependency_graph.svg?branch=master)](https://travis-ci.org/shreyasbharath/cpp_dependency_graph) [![Maintainability](https://api.codeclimate.com/v1/badges/2a07b587ca6fc8b1b3db/maintainability)](https://codeclimate.com/github/shreyasbharath/cpp_dependency_graph/maintainability) [![Codacy](https://api.codacy.com/project/badge/Grade/9439dbb7fde44b5380401acba5325e62)](https://www.codacy.com/app/shreyasbharath/cpp_dependency_graph?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=shreyasbharath/cpp_dependency_graph&amp;utm_campaign=Badge_Grade) [![Test Coverage](https://api.codeclimate.com/v1/badges/2a07b587ca6fc8b1b3db/test_coverage)](https://codeclimate.com/github/shreyasbharath/cpp_dependency_graph/test_coverage) [![Release](https://img.shields.io/github/release/shreyasbharath/cpp_dependency_graph.svg?maxAge=3600)](https://github.com/shreyasbharath/cpp_dependency_graph/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/shreyasbharath/cpp_dependency_graph.svg?branch=master)](https://travis-ci.org/shreyasbharath/cpp_dependency_graph)
+[![Maintainability](https://api.codeclimate.com/v1/badges/2a07b587ca6fc8b1b3db/maintainability)](https://codeclimate.com/github/shreyasbharath/cpp_dependency_graph/maintainability)
+[![Codacy](https://api.codacy.com/project/badge/Grade/9439dbb7fde44b5380401acba5325e62)](https://www.codacy.com/app/shreyasbharath/cpp_dependency_graph?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=shreyasbharath/cpp_dependency_graph&amp;utm_campaign=Badge_Grade)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/2a07b587ca6fc8b1b3db/test_coverage)](https://codeclimate.com/github/shreyasbharath/cpp_dependency_graph/test_coverage)
+[![Release](https://img.shields.io/github/release/shreyasbharath/cpp_dependency_graph.svg?maxAge=3600)](https://github.com/shreyasbharath/cpp_dependency_graph/releases)
 
 Generates useful component dependency visualisations (`dot` or `d3.js`) to study the architecture of C/C++ projects.
 
