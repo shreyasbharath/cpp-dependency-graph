@@ -1,5 +1,7 @@
 # Cpp Dependency Graph
 
+[![Join the chat at https://gitter.im/cpp_dependency_graph/Lobby](https://badges.gitter.im/cpp_dependency_graph/Lobby.svg)](https://gitter.im/cpp_dependency_graph/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 <!-- [![Gem Version] -->
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
