@@ -27,18 +27,18 @@
 require 'docopt'
 require 'cpp_dependency_graph'
 
-require 'ruby-prof'
+# require 'ruby-prof'
 
 include CppDependencyGraph
 
-RubyProf.start
+# RubyProf.start
 
 doc = <<DOCOPT
   Cpp Dependency Graph
 
   Usage:
     cpp_dependency_graph visualise --root_dir <argument> [--component <component>] [--output_file <file>] [--output_format <format>]
-    cpp_dependency_graph visualise_includes --root_dir <argument> --component <component> [--output_file <file>] [--output_format <format>]
+    cpp_dependency_graph visualise_includes --root_dir <argument> [--component <component>] [--output_file <file>] [--output_format <format>]
     cpp_dependency_graph visualise_components --root_dir <argument> [--output_file <file>] [--output_format <format>]
     cpp_dependency_graph visualise_cyclic_deps --root_dir <argument> [--component <component>] [--output_file <file>] [--output_format <format>]
     cpp_dependency_graph -h | --help | -v | --version
@@ -74,7 +74,11 @@ begin
       generate_project_graph(project_dir, args['--output_format'], args['--output_file'])
     end
   elsif args['visualise_includes']
-    generate_component_include_graph(project_dir, args['--component'], args['--output_format'], args['--output_file'])
+    if args['--component']
+      generate_component_include_graph(project_dir, args['--component'], args['--output_format'], args['--output_file'])
+    else
+      generate_project_include_graph(project_dir, args['--output_format'], args['--output_file'])
+    end
   elsif args['visualise_components']
     generate_enclosure_diagram(project_dir, args['--output_file'])
   elsif args['visualise_cyclic_deps']
@@ -84,6 +88,6 @@ rescue Docopt::Exit => e
   puts e.message
 end
 
-result = RubyProf.stop
-printer = RubyProf::CallTreePrinter.new(result)
-printer.print(path: '.', profile: 'cpp_dependency_graph')
+# result = RubyProf.stop
+# printer = RubyProf::CallTreePrinter.new(result)
+# printer.print(path: '.', profile: 'cpp_dependency_graph')

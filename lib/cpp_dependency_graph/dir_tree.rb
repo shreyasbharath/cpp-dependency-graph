@@ -2,8 +2,12 @@
 
 require 'json'
 
+require_relative 'config'
+
 # Returns a root directory as a tree of directories
 class DirTree
+  include Config
+
   attr_reader :tree
 
   def initialize(path)
@@ -13,17 +17,22 @@ class DirTree
   private
 
   def parse_dirs(path, name = nil)
-    data = {}
+    data = Hash.new{|h, k| h[k] = []}
     data[:name] = (name || path)
-    data[:children] = children = []
     # TODO: Use Dir.map.compact|filter instead here
     Dir.foreach(path) do |entry|
       next if ['..', '.'].include?(entry)
       full_path = File.join(path, entry)
       next unless File.directory?(full_path)
-      children << parse_dirs(full_path, entry)
+      next unless source_files_present?(full_path)
+      data[:children] << parse_dirs(full_path, entry)
     end
     data
+  end
+
+  def source_files_present?(full_path)
+    files = Dir.glob(File.join(full_path, File.join('**', '*' + source_file_extensions)))
+    files.size.positive?
   end
 
   def to_s

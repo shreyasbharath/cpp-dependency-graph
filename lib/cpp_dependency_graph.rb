@@ -32,9 +32,17 @@ module CppDependencyGraph
     generate_visualisation(deps, format, output_file)
   end
 
+  def generate_project_include_graph(project_dir, format, output_file)
+    project = Project.new(project_dir)
+    graph = IncludeDependencyGraph.new(project)
+    deps = graph.all_links
+    generate_visualisation(deps, format, output_file)
+  end
+
   def generate_enclosure_diagram(project_dir, output_file)
     dir_tree = DirTree.new(project_dir)
     tree = dir_tree.tree
+    puts tree
     CirclePackingVisualiser.new.generate(tree, output_file)
   end
 

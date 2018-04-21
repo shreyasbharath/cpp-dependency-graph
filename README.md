@@ -11,7 +11,7 @@
 
 Generates useful component dependency visualisations (`dot` or `d3.js`) to study the architecture of C/C++ projects.
 
-Why do all the other languages have awesome tools to analyse codebases but C/C++ codebases do not?
+Why do all the other languages have awesome tools to analyse codebases but C/C++ does not?
 
 It's time to change that.
 

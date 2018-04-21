@@ -2,7 +2,7 @@
 
 require 'json'
 
-# Outputs a `d3 force graph layout` equipped HTML representation of a dependency graph
+# Outputs a `d3 circle packing layout` equipped HTML representation of a hierarchical tree
 class CirclePackingVisualiser
   def generate(tree, file)
     json_tree = JSON.pretty_generate(tree)

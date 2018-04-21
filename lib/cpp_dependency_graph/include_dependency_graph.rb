@@ -11,7 +11,13 @@ class IncludeDependencyGraph
   end
 
   def all_links
-    # TODO: Implement
+    components = @project.source_components
+    all_source_files = components.values.flat_map(&:source_files)
+    all_source_files.map do |file|
+      source = file.basename
+      links = file.includes.map { |inc| Link.new(source, inc, false) }
+      [source, links]
+    end.to_h
   end
 
   def all_cyclic_links

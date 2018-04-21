@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
+require_relative 'config'
 require_relative 'source_file'
 
 # Abstracts a source directory containing source files
 class SourceComponent
+  include Config
+
   attr_reader :path
 
   def initialize(path)
@@ -15,7 +18,7 @@ class SourceComponent
   end
 
   def source_files
-    @source_files ||= parse_source_files('.{h,hpp,hxx,c,cpp,cxx,cc}')
+    @source_files ||= parse_source_files(source_file_extensions)
   end
 
   def includes
