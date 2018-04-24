@@ -26,3 +26,18 @@ This tool is inspired by a number of projects [rubrowser](http://www.emadelsaid.
 The pretty `d3` visualisations are directly copied from `objc-dependency-visualiser`.
 
 A huge shout out to the people behind these projects.
+
+## Usage tutorial
+### Overall component dependency graph
+
+To generate the overall component dependency graph for a project, use it like so -
+
+`cpp_dependency_graph visualise -r spec\test\example_project\ -o deps.dot -f dot`
+
+Below is the overall `dot` and `d3` component dependency visualisations for [leveldb](https://github.com/google/leveldb)
+
+![Dot](examples/leveldb_overall.svg)
+
+![d3.js visualisation of leveldb](examples/leveldb_overall_d3.svg)
+
+![d3.js visualisation of rocksdb](examples/rocksdb_overall_d3.svg)

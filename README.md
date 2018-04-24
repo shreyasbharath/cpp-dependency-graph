@@ -51,17 +51,17 @@ A huge shout out to the people behind these projects.
 
 ### Overall component dependency graph
 
-To generate the overall component depenency graph for a project, use it like so -
+To generate the overall component dependency graph for a project, use it like so -
 
 `cpp_dependency_graph visualise -r spec\test\example_project\ -o deps.dot -f dot`
 
 Below is the overall `dot` and `d3` component dependency visualisations for [leveldb](https://github.com/google/leveldb)
 
-![Dot](examples/leveldb_overall.svg)
+![Dot](docs/examples/leveldb_overall.svg)
 
-![d3.js visualisation of leveldb](examples/leveldb_overall_d3.svg)
+![d3.js visualisation of leveldb](docs/examples/leveldb_overall_d3.svg)
 
-![d3.js visualisation of rocksdb](examples/rocksdb_overall_d3.svg)
+![d3.js visualisation of rocksdb](docs/examples/rocksdb_overall_d3.svg)
 
 **NOTE** - If your project has a large number of components (> 100 and lots of connections between them), then generation (and subsequent rendering) may take some time.
 
@@ -73,9 +73,9 @@ This will highlight the dependencies coming in and going out of a specific compo
 
 Here's a component dependency visualisation generated for the `queue` component in [rethinkdb](https://github.com/rethinkdb/rethinkdb)
 
-![Queue component dot visualisation](examples/rethinkdb_queue_component.svg)
+![Queue component dot visualisation](docs/examples/rethinkdb_queue_component.svg)
 
-![Queue component d3 visualisation](examples/rethinkdb_queue_component_d3.svg)
+![Queue component d3 visualisation](docs/examples/rethinkdb_queue_component_d3.svg)
 
 ### Component include dependency graph
 
@@ -85,9 +85,9 @@ This will highlight dependencies of includes within a specific component
 
 Here's a component include dependency visualisation generated for the `queue` component in [rethinkdb](https://github.com/rethinkdb/rethinkdb)
 
-![Queue include graph dot](examples/rethinkdb_queue_include.svg)
+![Queue include graph dot](docs/examples/rethinkdb_queue_include.svg)
 
-![Queue include graph d3](examples/rethinkdb_queue_include_d3.svg)
+![Queue include graph d3](docs/examples/rethinkdb_queue_include_d3.svg)
 
 ### Cyclic dependencies only graph
 
@@ -97,9 +97,9 @@ This will highlight cyclic dependencies between components within a project. Thi
 
 Here's the cyclic dependencies only visualisation generated for [rethinkdb](https://github.com/rethinkdb/rethinkdb) and [leveldb](https://github.com/google/leveldb)
 
-![rethinkdb](examples/rethinkdb_cyclic_deps.svg)
+![rethinkdb](docs/examples/rethinkdb_cyclic_deps.svg)
 
-![leveldb](examples/leveldb_cyclic_deps.svg)
+![leveldb](docs/examples/leveldb_cyclic_deps.svg)
 
 ## Development
 
