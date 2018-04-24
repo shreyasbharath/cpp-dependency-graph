@@ -1,6 +1,8 @@
 ---
-layout: home
-title: "Github Pages for Non-Developers: Build Web Portfolios From Scratch"
+layout: page
+title: Cpp Dependency Graph
+tagline: Visualise C/C++ projects with amazing visualisations
+description: Tutorial on how to use Cpp Dependency Graph
 ---
 
 # Cpp Dependency Graph
