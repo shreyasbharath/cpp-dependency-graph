@@ -17,7 +17,7 @@ class DirTree
   private
 
   def parse_dirs(path, name = nil)
-    data = Hash.new{|h, k| h[k] = []}
+    data = Hash.new { |h, k| h[k] = [] }
     data[:name] = (name || path)
     # TODO: Use Dir.map.compact|filter instead here
     Dir.foreach(path) do |entry|

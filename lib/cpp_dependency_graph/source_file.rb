@@ -47,6 +47,12 @@ class SourceFile
   end
 
   def file_contents
-    @file_contents ||= File.read(@path)
+    @file_contents ||= sanitised_file_contents
+  end
+
+  def sanitised_file_contents
+    contents = File.read(@path)
+    return contents if contents.valid_encoding?
+    contents.encode('UTF-16be', invalid: :replace, replace: '?').encode('UTF-8')
   end
 end
