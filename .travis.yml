@@ -1,10 +1,9 @@
 language: ruby
-dist: trusty
+dist: bionic
 cache: bundler
 sudo: false
 rvm:
-  - 2.4
-  - 2.5
+  - 2.7
 before_install:
   - gem update --system
   - gem update --remote bundler
