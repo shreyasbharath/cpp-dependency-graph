@@ -12,29 +12,28 @@ RSpec.describe DirTree do
   end
 
   it 'returns all directories and its subdirectories as a tree hash structure' do
-    expected_tree = JSON.parse('{
-      "name": "spec/test/example_project",
-      "children": [{
-        "name": "DataAccess",
-        "children": []
-      }, {
-        "name": "Engine",
-        "children": []
-      }, {
-        "name": "Framework",
-        "children": []
-      }, {
-        "name": "main",
-        "children": []
-      }, {
-        "name": "System",
-        "children": []
-      }, {
-        "name": "UI",
-        "children": []
-      }]
-    }',
-                               symbolize_names: true)
+    # expected_tree = JSON.parse('{
+    #   "name": "spec/test/example_project",
+    #   "children": [{
+    #     "name": "DataAccess",
+    #     "children": []
+    #   }, {
+    #     "name": "Engine",
+    #     "children": []
+    #   }, {
+    #     "name": "Framework",
+    #     "children": []
+    #   }, {
+    #     "name": "main",
+    #     "children": []
+    #   }, {
+    #     "name": "System",
+    #     "children": []
+    #   }, {
+    #     "name": "UI",
+    #     "children": []
+    #   }]
+    # }')
     # expect(dir_tree.tree).to eq(expected_tree)
   end
 end

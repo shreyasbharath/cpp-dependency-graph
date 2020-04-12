@@ -35,6 +35,7 @@ RSpec.describe Project do
   it 'all source files of project' do
     project = Project.new('spec/test/example_project')
     source_files = project.source_files.values.map(&:basename)
-    expect(source_files).to contain_exactly('DA.h', 'Display.cpp', 'Display.h', 'Engine.cpp', 'Engine.h', 'Engine.h', 'OldEngine.h', 'System.cpp', 'System.h', 'framework.h', 'main.cpp')
+    expect(source_files).to contain_exactly('DA.h', 'Display.cpp', 'Display.h', 'Engine.cpp', 'Engine.h', 'Engine.h',
+                                            'OldEngine.h', 'System.cpp', 'System.h', 'framework.h', 'main.cpp')
   end
 end

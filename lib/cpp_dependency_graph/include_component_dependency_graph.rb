@@ -11,7 +11,6 @@ class IncludeComponentDependencyGraph
   end
 
   def all_links
-    components = @project.source_components
     @project.source_files.map do |file|
       links = file.includes.map { |inc| Link.new(file.basename, inc, false) }
       [file.basename, links]

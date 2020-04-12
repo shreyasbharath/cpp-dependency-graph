@@ -20,6 +20,7 @@ class FileDependencyGraph
 
   def links(name)
     return {} unless all_links.key?(name)
+
     links = incoming_links(name)
     links.merge!(outgoing_links(name))
     links

@@ -6,9 +6,9 @@ require 'ruby-graphviz'
 class GraphToDotVisualiser
   def generate(deps, file)
     @g = GraphViz.new('dependency_graph')
-    nodes = create_nodes(deps)
-    connect_nodes(deps, nodes)
-    @g.output(:dot => file)
+    create_nodes(deps)
+    connect_nodes(deps)
+    @g.output(dot: file)
   end
 
   private
@@ -17,20 +17,20 @@ class GraphToDotVisualiser
     node_names = deps.flat_map do |_, links|
       links.map { |link| [link.source, link.target] }.flatten
     end.uniq
-    nodes = node_names.map { |name| [name, create_node(name)] }.to_h
-    nodes
+    node_names.each do |name|
+      add_node(name)
+    end
   end
 
-  def create_node(name)
-    node = @g.add_node(name, :shape => 'box3d')
-    node
+  def add_node(name)
+    @g.add_node(name, shape: 'box3d')
   end
 
-  def connect_nodes(deps, nodes)
+  def connect_nodes(deps)
     deps.each do |source, links|
       links.each do |link|
         if link.cyclic?
-          @g.add_edges(source, link.target, :color => 'red')
+          @g.add_edges(source, link.target, color: 'red')
         else
           @g.add_edges(source, link.target)
         end
