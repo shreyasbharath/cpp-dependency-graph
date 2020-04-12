@@ -21,6 +21,10 @@ class Project
     source_components[name]
   end
 
+  def source_files
+    @source_files ||= build_source_files
+  end
+
   def dependencies(component)
     # TODO: This is repeating the same work twice! component_for_include is called when calling external_includes
     external_includes(component).map { |include| @include_resolver.component_for_include(include) }.reject(&:empty?).uniq
@@ -31,6 +35,14 @@ class Project
   end
 
   private
+
+  def build_source_files
+    # TODO: Breaking Demeter's law here
+    files = source_components.values.flat_map(&:source_files)
+    files.map do |file|
+      [file.path, file]
+    end.to_h
+  end
 
   def build_source_components
     # TODO: Dealing with source components with same dir name?
