@@ -3,6 +3,11 @@
 require 'cpp_dependency_graph/project'
 
 RSpec.describe Project do
+  it 'parses overall project component' do
+    component_names = Project.new('spec/test/example_project').project_component.values.map(&:name).sort
+    expect(component_names).to eq(%w[example_project])
+  end
+
   it 'parses all source components' do
     component_names = Project.new('spec/test/example_project').source_components.values.map(&:name).sort
     expect(component_names).to eq(%w[DataAccess Engine Framework System UI main])

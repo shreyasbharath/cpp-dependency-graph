@@ -14,8 +14,8 @@ RSpec.describe SourceComponent do
   end
 
   it 'parses all source files within it' do
-    source_file_names = SourceComponent.new('spec/test/example_project/Engine').source_files.map(&:basename)
-    expect(source_file_names).to eq(['Engine.h', 'OldEngine.h', 'Engine.cpp'])
+    source_file_names = SourceComponent.new('spec/test/example_project/Engine').source_files.map(&:basename).sort
+    expect(source_file_names).to eq(['Engine.cpp', 'Engine.h', 'OldEngine.h'])
   end
 
   it 'has an includes attribute' do

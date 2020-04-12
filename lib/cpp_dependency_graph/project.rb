@@ -24,6 +24,10 @@ class Project
     source_components[name]
   end
 
+  def project_component
+    @project_component ||= build_project_component
+  end
+
   def source_files
     @source_files ||= build_source_files
   end
@@ -41,10 +45,15 @@ class Project
 
   def build_source_files
     # TODO: Breaking Demeter's law here
-    files = source_components.values.flat_map(&:source_files)
+    files = project_component.values.flat_map(&:source_files)
     files.map do |file|
       [file.path, file]
     end.to_h
+  end
+
+  def build_project_component
+    c = SourceComponent.new(@path)
+    { c.name => c }
   end
 
   def build_source_components
