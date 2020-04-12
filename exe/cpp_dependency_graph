@@ -51,7 +51,7 @@ doc = <<DOCOPT
     -v --version                show version and exit
     -r --root_dir dir           top level root directory of C/C++ project
     -o --output_file file       name of output file to be generated [default: deps.html]
-    -f --output_format format   format of output file (dot, html, graphml, json) [default: html]
+    -f --output_format format   format of output file (svg, html, graphml, json) [default: html]
     --component component       component generate visualisation for (case sensitive!)
     --header file               header file to generate visualisation for (case sensitive!)
 DOCOPT

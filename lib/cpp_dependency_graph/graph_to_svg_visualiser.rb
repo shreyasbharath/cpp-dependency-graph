@@ -3,12 +3,12 @@
 require 'ruby-graphviz'
 
 # Outputs a `dot` language representation of a dependency graph
-class GraphToDotVisualiser
+class GraphToSvgVisualiser
   def generate(deps, file)
     @g = GraphViz.new('dependency_graph')
     create_nodes(deps)
     connect_nodes(deps)
-    @g.output(dot: file)
+    @g.output(svg: file)
   end
 
   private
