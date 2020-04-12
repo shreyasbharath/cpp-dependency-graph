@@ -4,13 +4,13 @@ require 'cpp_dependency_graph/project'
 
 RSpec.describe Project do
   it 'parses overall project component' do
-    component_names = Project.new('spec/test/example_project').project_component.values.map(&:name).sort
-    expect(component_names).to eq(%w[example_project])
+    component_names = Project.new('spec/test/example_project').project_component.values.map(&:name)
+    expect(component_names).to contain_exactly('example_project')
   end
 
   it 'parses all source components' do
-    component_names = Project.new('spec/test/example_project').source_components.values.map(&:name).sort
-    expect(component_names).to eq(%w[DataAccess Engine Framework System UI main])
+    component_names = Project.new('spec/test/example_project').source_components.values.map(&:name)
+    expect(component_names).to contain_exactly('DataAccess', 'Engine', 'Framework', 'System', 'UI', 'main')
   end
 
   it 'returns null component if case does not match' do
@@ -34,7 +34,7 @@ RSpec.describe Project do
 
   it 'all source files of project' do
     project = Project.new('spec/test/example_project')
-    source_files = project.source_files.values.map(&:basename).sort
-    expect(source_files).to eq(["DA.h", "Display.cpp", "Display.h", "Engine.cpp", "Engine.h", "Engine.h", "OldEngine.h", "System.cpp", "System.h", "framework.h", "main.cpp"])
+    source_files = project.source_files.values.map(&:basename)
+    expect(source_files).to contain_exactly('DA.h', 'Display.cpp', 'Display.h', 'Engine.cpp', 'Engine.h', 'Engine.h', 'OldEngine.h', 'System.cpp', 'System.h', 'framework.h', 'main.cpp')
   end
 end

@@ -14,13 +14,13 @@ RSpec.describe SourceComponent do
   end
 
   it 'parses all source files within it' do
-    source_file_names = SourceComponent.new('spec/test/example_project/Engine').source_files.map(&:basename).sort
-    expect(source_file_names).to eq(['Engine.cpp', 'Engine.h', 'OldEngine.h'])
+    source_file_names = SourceComponent.new('spec/test/example_project/Engine').source_files.map(&:basename)
+    expect(source_file_names).to contain_exactly('Engine.cpp', 'Engine.h', 'OldEngine.h')
   end
 
   it 'has an includes attribute' do
     component = SourceComponent.new('spec/test/example_project/Engine')
-    expect(component.includes).to eq(['framework.h', 'Display.h', 'DA.h', 'Engine.h'])
+    expect(component.includes).to contain_exactly('framework.h', 'Display.h', 'DA.h', 'Engine.h')
   end
 
   it 'has a loc (lines of code) attribute' do
