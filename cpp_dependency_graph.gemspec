@@ -29,13 +29,12 @@ Gem::Specification.new do |s|
   s.rubygems_version = '3.1.2'
 
   s.add_runtime_dependency 'docopt', '~> 0.6'
-  s.add_runtime_dependency 'graphviz', '~> 1.1'
+  s.add_runtime_dependency 'ruby-graphviz', '~> 1.2'
   s.add_runtime_dependency 'json', '~> 2.3.0'
-  s.add_runtime_dependency 'parallel', '~> 1.19'
 
   s.add_development_dependency 'bundler', '~> 2.1'
   s.add_development_dependency 'debase', '~> 0.2'
-  s.add_development_dependency 'rake', '~> 12.3'
+  s.add_development_dependency 'rake', '~> 13.0'
   s.add_development_dependency 'rspec', '~> 3.9'
   s.add_development_dependency 'rubocop', '~> 0.81'
   s.add_development_dependency 'ruby-debug-ide', '~> 0.7'

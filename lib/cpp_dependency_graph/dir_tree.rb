@@ -24,15 +24,16 @@ class DirTree
       next if ['..', '.'].include?(entry)
       full_path = File.join(path, entry)
       next unless File.directory?(full_path)
-      next unless source_files_present?(full_path)
+      data[:files] = num_source_files(full_path)
+      next unless data[:files].positive?
       data[:children] << parse_dirs(full_path, entry)
     end
     data
   end
 
-  def source_files_present?(full_path)
+  def num_source_files(full_path)
     files = Dir.glob(File.join(full_path, File.join('**', '*' + source_file_extensions)))
-    files.size.positive?
+    files.size
   end
 
   def to_s

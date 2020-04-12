@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'graphviz'
+require 'ruby-graphviz'
 
-# Outputs a `dot` langugage representation of a dependency graph
+# Outputs a `dot` language representation of a dependency graph
 class GraphToDotVisualiser
   def generate(deps, file)
     @g = Graphviz::Graph.new('dependency_graph')
