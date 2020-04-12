@@ -14,10 +14,22 @@ RSpec.describe Project do
     expect(component.source_files.size).to eq(0)
   end
 
+  it 'returns null component if no such component exists' do
+    component = Project.new('spec/test/example_project').source_component('Unknown')
+    expect(component.name).to eq('NULL')
+    expect(component.source_files.size).to eq(0)
+  end
+
   it 'returns dependencies of component' do
     project = Project.new('spec/test/example_project')
     component = project.source_component('Engine')
     dependencies = project.dependencies(component)
     expect(dependencies).to include('Framework', 'UI', 'DataAccess')
+  end
+
+  it 'all source files of project' do
+    project = Project.new('spec/test/example_project')
+    source_files = project.source_files.values.map(&:basename).sort
+    expect(source_files).to eq(["DA.h", "Display.cpp", "Display.h", "Engine.cpp", "Engine.h", "Engine.h", "OldEngine.h", "System.cpp", "System.h", "framework.h", "main.cpp"])
   end
 end

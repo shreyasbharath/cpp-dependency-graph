@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 require_relative 'config'
+require_relative 'directory_parser'
 require_relative 'source_file'
 
 # Abstracts a source directory containing source files
 class SourceComponent
   include Config
+  include DirectoryParser
 
   attr_reader :path
 
@@ -32,7 +34,6 @@ class SourceComponent
   private
 
   def parse_source_files(extensions)
-    path = File.join(@path, File::SEPARATOR) + '*' + extensions
-    Dir.glob(path).map { |e| SourceFile.new(e) if File.file?(e) }.compact
+    glob_files(@path, extensions).map { |e| SourceFile.new(e) }.compact
   end
 end
