@@ -51,7 +51,7 @@ A huge shout out to the people behind these projects.
 
 To generate the overall component dependency graph for a project, use it like so -
 
-`cpp_dependency_graph visualise_project -r spec\test\example_project\ -o deps.dot -f dot`
+`cpp_dependency_graph visualise_project -r spec\test\example_project\ -o deps.svg -f svg`
 
 Below is the overall `dot` and `d3` component dependency visualisations for [leveldb](https://github.com/google/leveldb)
 
