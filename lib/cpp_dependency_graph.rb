@@ -3,8 +3,8 @@
 require_relative 'cpp_dependency_graph/circle_packing_visualiser'
 require_relative 'cpp_dependency_graph/component_dependency_graph'
 require_relative 'cpp_dependency_graph/dir_tree'
-require_relative 'cpp_dependency_graph/graph_to_dot_visualiser'
 require_relative 'cpp_dependency_graph/graph_to_html_visualiser'
+require_relative 'cpp_dependency_graph/graph_to_svg_visualiser'
 require_relative 'cpp_dependency_graph/include_component_dependency_graph'
 require_relative 'cpp_dependency_graph/include_file_dependency_graph'
 require_relative 'cpp_dependency_graph/project'
@@ -63,8 +63,8 @@ module CppDependencyGraph
 
   def generate_visualisation(deps, format, file)
     case format
-    when 'dot'
-      GraphToDotVisualiser.new.generate(deps, file)
+    when 'svg'
+      GraphToSvgVisualiser.new.generate(deps, file)
     when 'html'
       GraphToHtmlVisualiser.new.generate(deps, file)
     when 'json'
