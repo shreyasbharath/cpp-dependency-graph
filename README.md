@@ -51,7 +51,7 @@ A huge shout out to the people behind these projects.
 
 To generate the overall component dependency graph for a project, use it like so -
 
-`cpp_dependency_graph visualise -r spec\test\example_project\ -o deps.dot -f dot`
+`cpp_dependency_graph visualise_project -r spec\test\example_project\ -o deps.dot -f dot`
 
 Below is the overall `dot` and `d3` component dependency visualisations for [leveldb](https://github.com/google/leveldb)
 
@@ -67,7 +67,7 @@ Below is the overall `dot` and `d3` component dependency visualisations for [lev
 
 This will highlight the dependencies coming in and going out of a specific component. This allows you to filter out extraneous detail and study individual components in more detail.
 
-`cpp_dependency_graph visualise -r spec\test\example_project\ -c Engine -o deps.dot -f dot`
+`cpp_dependency_graph visualise_component -r spec\test\example_project\ --component Engine -o deps.dot -f dot`
 
 Here's a component dependency visualisation generated for the `queue` component in [rethinkdb](https://github.com/rethinkdb/rethinkdb)
 
@@ -79,7 +79,7 @@ Here's a component dependency visualisation generated for the `queue` component 
 
 This will highlight dependencies of includes within a specific component
 
-`cpp_dependency_graph visualise_includes -r spec\test\example_project\ -c Engine`
+`cpp_dependency_graph visualise_component_includes -r spec\test\example_project\ --component Engine`
 
 Here's a component include dependency visualisation generated for the `queue` component in [rethinkdb](https://github.com/rethinkdb/rethinkdb)
 
@@ -87,17 +87,15 @@ Here's a component include dependency visualisation generated for the `queue` co
 
 ![Queue include graph d3](docs/examples/rethinkdb_queue_include_d3.svg)
 
-### File include dependency graph
+### Header file include dependency graph
 
-This will highlight include dependencies of files globally within the project
+This will highlight include dependencies of header files globally within the project
 
-`cpp_dependency_graph visualise_includes -r spec\test\example_project\ -c Engine`
+`cpp_dependency_graph visualise_header_includes -r spec\test\example_project\ --header Engine.h`
 
-Here's a component include dependency visualisation generated for the `queue` component in [rethinkdb](https://github.com/rethinkdb/rethinkdb)
+Here's a component include dependency visualisation generated for the `errors.hpp` header file in [rethinkdb](https://github.com/rethinkdb/rethinkdb)
 
-![Queue include graph dot](docs/examples/rethinkdb_queue_include.svg)
-
-![Queue include graph d3](docs/examples/rethinkdb_queue_include_d3.svg)
+![Errors.hpp include graph dot](docs/examples/rethinkdb_errors_header_include.svg)
 
 ### Cyclic dependencies only graph
 
@@ -113,7 +111,7 @@ Here's the cyclic dependencies only visualisation generated for [rethinkdb](http
 
 ## Development
 
-`bundle exec cpp_dependency_graph visualise -r <dir>`
+`bundle exec cpp_dependency_graph <cmd> -r <dir> ...`
 
 ### Running all unit tests
 
@@ -121,7 +119,7 @@ Here's the cyclic dependencies only visualisation generated for [rethinkdb](http
 
 ### Running a single test
 
-`rake spec SPEC=spec/test/include_file_dependency_graph_spec.rb`
+`rake spec SPEC=<path_to_spec_file>`
 
 ## License
 
