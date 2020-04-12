@@ -4,8 +4,6 @@ require_relative 'project'
 require_relative 'link'
 require_relative 'cycle_detector'
 
-require 'pp'
-
 # Returns a hash of individual file include links
 class IncludeFileDependencyGraph
   def initialize(project)

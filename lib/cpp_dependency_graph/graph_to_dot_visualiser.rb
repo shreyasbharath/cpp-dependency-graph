@@ -8,7 +8,7 @@ class GraphToDotVisualiser
     @g = GraphViz.new('dependency_graph')
     nodes = create_nodes(deps)
     connect_nodes(deps, nodes)
-    File.write(file, @g.to_dot)
+    @g.output(:dot => file)
   end
 
   private

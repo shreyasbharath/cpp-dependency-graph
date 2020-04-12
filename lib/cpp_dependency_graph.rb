@@ -29,7 +29,7 @@ module CppDependencyGraph
   def generate_file_include_graph(project_dir, file_name, format, output_file)
     project = Project.new(project_dir)
     graph = IncludeFileDependencyGraph.new(project)
-    deps = graph.file_links(component_name)
+    deps = graph.links(file_name)
     generate_visualisation(deps, format, output_file)
   end
 

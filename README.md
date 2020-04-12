@@ -37,8 +37,6 @@ A huge shout out to the people behind these projects.
 
 ### dep-matrix
 
-
-
 ## Usage
 
 ### Installation
@@ -80,6 +78,18 @@ Here's a component dependency visualisation generated for the `queue` component 
 ### Component include dependency graph
 
 This will highlight dependencies of includes within a specific component
+
+`cpp_dependency_graph visualise_includes -r spec\test\example_project\ -c Engine`
+
+Here's a component include dependency visualisation generated for the `queue` component in [rethinkdb](https://github.com/rethinkdb/rethinkdb)
+
+![Queue include graph dot](docs/examples/rethinkdb_queue_include.svg)
+
+![Queue include graph d3](docs/examples/rethinkdb_queue_include_d3.svg)
+
+### File include dependency graph
+
+This will highlight include dependencies of files globally within the project
 
 `cpp_dependency_graph visualise_includes -r spec\test\example_project\ -c Engine`
 
