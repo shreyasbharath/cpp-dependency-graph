@@ -4,6 +4,8 @@ require_relative 'project'
 require_relative 'link'
 require_relative 'cycle_detector'
 
+require 'pp'
+
 # Returns a hash of individual file include links
 class IncludeFileDependencyGraph
   def initialize(project)
@@ -23,10 +25,10 @@ class IncludeFileDependencyGraph
     components = @project.source_components
     all_source_files = components.values.flat_map(&:source_files)
     files = all_source_files.select do |file|
-      file.basename == file_name
+      file.includes.include?(file_name)
     end
     files.map do |file|
-      links = file.includes.map { |inc| Link.new(file.basename, inc, false) }
+      links = [Link.new(file.basename, file_name, false)]
       [file.basename, links]
     end.to_h
   end

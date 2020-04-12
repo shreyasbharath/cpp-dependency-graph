@@ -13,9 +13,9 @@ RSpec.describe IncludeFileDependencyGraph do
 
   it 'returns include links for a specified file' do
     expected_links = {}
-    expected_links['Engine.h'] = [Link.new('Engine.h', 'Engine.cpp', false),
-                                  Link.new('Engine.h', 'Display.cpp', false),
-                                  Link.new('Engine.h', 'Display.h', false)]
+    expected_links['Display.cpp'] = [Link.new('Display.cpp', 'Engine.h', false)]
+    # expected_links['Display.h'] = [Link.new('Display.h', 'Engine.h', false)]
+    expected_links['Engine.cpp'] = [Link.new('Engine.cpp', 'Engine.h', false)]
     expect(include_dependency_graph.links('Engine.h')).to eq(expected_links)
   end
 end
