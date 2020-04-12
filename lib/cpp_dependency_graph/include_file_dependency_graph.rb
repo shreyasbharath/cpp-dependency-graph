@@ -20,6 +20,14 @@ class IncludeFileDependencyGraph
   end
 
   def links(file_name)
-    {}
+    components = @project.source_components
+    all_source_files = components.values.flat_map(&:source_files)
+    files = all_source_files.select do |file|
+      file.basename == file_name
+    end
+    files.map do |file|
+      links = file.includes.map { |inc| Link.new(file.basename, inc, false) }
+      [file.basename, links]
+    end.to_h
   end
 end

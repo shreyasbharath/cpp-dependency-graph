@@ -105,6 +105,14 @@ Here's the cyclic dependencies only visualisation generated for [rethinkdb](http
 
 `bundle exec cpp_dependency_graph visualise -r <dir>`
 
+### Running all unit tests
+
+`rake spec`
+
+### Running a single test
+
+`rake spec SPEC=spec/test/include_file_dependency_graph_spec.rb`
+
 ## License
 
 cpp_dependency_graph is available under the MIT license.
