@@ -38,7 +38,7 @@ doc = <<DOCOPT
 
   Usage:
     cpp_dependency_graph visualise --root_dir <argument> [--component <component>] [--output_file <file>] [--output_format <format>]
-    cpp_dependency_graph visualise_includes --root_dir <argument> [--component <component>] [--output_file <file>] [--output_format <format>]
+    cpp_dependency_graph visualise_includes --root_dir <argument> [--file <file>] [--component <component>] [--output_file <file>] [--output_format <format>]
     cpp_dependency_graph visualise_components --root_dir <argument> [--output_file <file>] [--output_format <format>]
     cpp_dependency_graph visualise_cyclic_deps --root_dir <argument> [--component <component>] [--output_file <file>] [--output_format <format>]
     cpp_dependency_graph -h | --help | -v | --version
