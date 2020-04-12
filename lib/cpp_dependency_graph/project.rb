@@ -2,11 +2,14 @@
 
 require 'find'
 
+require_relative 'directory_parser'
 require_relative 'include_to_component_resolver'
 require_relative 'source_component'
 
 # Parses all components of a project
 class Project
+  include DirectoryParser
+
   def initialize(path)
     @path = path
     @include_resolver = IncludeToComponentResolver.new(source_components)
@@ -54,7 +57,4 @@ class Project
     components.delete_if { |_, v| v.source_files.size.zero? }
   end
 
-  def fetch_all_dirs(source_dir)
-    Find.find(source_dir).select { |e| File.directory?(e) }
-  end
 end
