@@ -5,7 +5,8 @@ require_relative 'cpp_dependency_graph/component_dependency_graph'
 require_relative 'cpp_dependency_graph/dir_tree'
 require_relative 'cpp_dependency_graph/graph_to_dot_visualiser'
 require_relative 'cpp_dependency_graph/graph_to_html_visualiser'
-require_relative 'cpp_dependency_graph/include_dependency_graph'
+require_relative 'cpp_dependency_graph/include_component_dependency_graph'
+require_relative 'cpp_dependency_graph/include_file_dependency_graph'
 require_relative 'cpp_dependency_graph/project'
 require_relative 'cpp_dependency_graph/version'
 
@@ -25,16 +26,23 @@ module CppDependencyGraph
     generate_visualisation(deps, format, output_file)
   end
 
+  def generate_file_include_graph(project_dir, file_name, format, output_file)
+    project = Project.new(project_dir)
+    graph = IncludeFileDependencyGraph.new(project)
+    deps = graph.links(file_name)
+    generate_visualisation(deps, format, output_file)
+  end
+
   def generate_component_include_graph(project_dir, component_name, format, output_file)
     project = Project.new(project_dir)
-    graph = IncludeDependencyGraph.new(project)
+    graph = IncludeComponentDependencyGraph.new(project)
     deps = graph.links(component_name)
     generate_visualisation(deps, format, output_file)
   end
 
   def generate_project_include_graph(project_dir, format, output_file)
     project = Project.new(project_dir)
-    graph = IncludeDependencyGraph.new(project)
+    graph = IncludeComponentDependencyGraph.new(project)
     deps = graph.all_links
     generate_visualisation(deps, format, output_file)
   end

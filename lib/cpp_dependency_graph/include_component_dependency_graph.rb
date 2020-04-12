@@ -5,7 +5,7 @@ require_relative 'link'
 require_relative 'cycle_detector'
 
 # Returns a hash of intra-component include links
-class IncludeDependencyGraph
+class IncludeComponentDependencyGraph
   def initialize(project)
     @project = project
   end
@@ -14,9 +14,8 @@ class IncludeDependencyGraph
     components = @project.source_components
     all_source_files = components.values.flat_map(&:source_files)
     all_source_files.map do |file|
-      source = file.basename
-      links = file.includes.map { |inc| Link.new(source, inc, false) }
-      [source, links]
+      links = file.includes.map { |inc| Link.new(file.basename, inc, false) }
+      [file.basename, links]
     end.to_h
   end
 
@@ -30,10 +29,9 @@ class IncludeDependencyGraph
     external_includes = @project.external_includes(component)
     source_files.map do |file|
       # TODO: Very inefficient
-      source = file.basename
       internal_includes = file.includes.reject { |inc| external_includes.any?(inc) }
-      links = internal_includes.map { |inc| Link.new(source, inc, false) }
-      [source, links]
+      links = internal_includes.map { |inc| Link.new(file.basename, inc, false) }
+      [file.basename, links]
     end.to_h
   end
 end

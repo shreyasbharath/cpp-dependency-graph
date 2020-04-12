@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'cpp_dependency_graph/include_dependency_graph'
+require 'cpp_dependency_graph/include_component_dependency_graph'
 require 'cpp_dependency_graph/link'
 
-RSpec.describe IncludeDependencyGraph do
+RSpec.describe IncludeComponentDependencyGraph do
   let(:project) { Project.new('spec/test/example_project') }
-  let(:include_dependency_graph) { IncludeDependencyGraph.new(project) }
+  let(:include_dependency_graph) { IncludeComponentDependencyGraph.new(project) }
 
   it 'returns empty hash for an unknown component' do
     expect(include_dependency_graph.links('Unknown').empty?).to eq(true)

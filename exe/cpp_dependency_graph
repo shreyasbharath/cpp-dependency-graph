@@ -37,8 +37,11 @@ doc = <<DOCOPT
   Cpp Dependency Graph
 
   Usage:
-    cpp_dependency_graph visualise --root_dir <argument> [--component <component>] [--output_file <file>] [--output_format <format>]
-    cpp_dependency_graph visualise_includes --root_dir <argument> [--component <component>] [--output_file <file>] [--output_format <format>]
+    cpp_dependency_graph visualise_component --root_dir <argument> --component <component> [--output_file <file>] [--output_format <format>]
+    cpp_dependency_graph visualise_project --root_dir <argument> [--output_file <file>] [--output_format <format>]
+    cpp_dependency_graph visualise_component_includes --root_dir <argument> --component <component> [--output_file <file>] [--output_format <format>]
+    cpp_dependency_graph visualise_header_includes --root_dir <argument> --header <header> [--output_file <file>] [--output_format <format>]
+    cpp_dependency_graph visualise_project_includes --root_dir <argument> [--output_file <file>] [--output_format <format>]
     cpp_dependency_graph visualise_components --root_dir <argument> [--output_file <file>] [--output_format <format>]
     cpp_dependency_graph visualise_cyclic_deps --root_dir <argument> [--component <component>] [--output_file <file>] [--output_format <format>]
     cpp_dependency_graph -h | --help | -v | --version
@@ -47,9 +50,10 @@ doc = <<DOCOPT
     -h --help                   show this help message and exit
     -v --version                show version and exit
     -r --root_dir dir           top level root directory of C/C++ project
-    -c --component component    component generate visualisation for (case sensitive!)
     -o --output_file file       name of output file to be generated [default: deps.html]
     -f --output_format format   format of output file (dot, html, graphml, json) [default: html]
+    --component component       component generate visualisation for (case sensitive!)
+    --header file               header file to generate visualisation for (case sensitive!)
 DOCOPT
 
 begin
@@ -67,18 +71,16 @@ begin
     Kernel.exit(1)
   end
 
-  if args['visualise']
-    if args['--component']
-      generate_component_graph(project_dir, args['--component'], args['--output_format'], args['--output_file'])
-    else
-      generate_project_graph(project_dir, args['--output_format'], args['--output_file'])
-    end
-  elsif args['visualise_includes']
-    if args['--component']
-      generate_component_include_graph(project_dir, args['--component'], args['--output_format'], args['--output_file'])
-    else
-      generate_project_include_graph(project_dir, args['--output_format'], args['--output_file'])
-    end
+  if args['visualise_component']
+    generate_component_graph(project_dir, args['--component'], args['--output_format'], args['--output_file'])
+  elsif args['visualise_project']
+    generate_project_graph(project_dir, args['--output_format'], args['--output_file'])
+  elsif args['visualise_component_includes']
+    generate_component_include_graph(project_dir, args['--component'], args['--output_format'], args['--output_file'])
+  elsif args['visualise_header_includes']
+    generate_file_include_graph(project_dir, args['--header'], args['--output_format'], args['--output_file'])
+  elsif args['visualise_project_includes']
+    generate_project_include_graph(project_dir, args['--output_format'], args['--output_file'])
   elsif args['visualise_components']
     generate_enclosure_diagram(project_dir, args['--output_file'])
   elsif args['visualise_cyclic_deps']
