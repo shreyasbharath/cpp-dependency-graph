@@ -25,6 +25,13 @@ module CppDependencyGraph
     generate_visualisation(deps, format, output_file)
   end
 
+  def generate_file_include_graph(project_dir, file_name, format, output_file)
+    project = Project.new(project_dir)
+    graph = IncludeDependencyGraph.new(project)
+    deps = graph.links(component_name)
+    generate_visualisation(deps, format, output_file)
+  end
+
   def generate_component_include_graph(project_dir, component_name, format, output_file)
     project = Project.new(project_dir)
     graph = IncludeDependencyGraph.new(project)

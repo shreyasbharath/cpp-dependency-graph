@@ -76,6 +76,8 @@ begin
   elsif args['visualise_includes']
     if args['--component']
       generate_component_include_graph(project_dir, args['--component'], args['--output_format'], args['--output_file'])
+    elsif args['--file']
+      generate_file_include_graph(project_dir, args['--file'], args['--output_format'], args['--output_file'])
     else
       generate_project_include_graph(project_dir, args['--output_format'], args['--output_file'])
     end

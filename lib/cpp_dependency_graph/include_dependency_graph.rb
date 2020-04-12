@@ -24,7 +24,7 @@ class IncludeDependencyGraph
     # TODO: Implement
   end
 
-  def links(component_name)
+  def component_links(component_name)
     component = @project.source_component(component_name)
     source_files = component.source_files
     external_includes = @project.external_includes(component)
@@ -35,5 +35,9 @@ class IncludeDependencyGraph
       links = internal_includes.map { |inc| Link.new(source, inc, false) }
       [source, links]
     end.to_h
+  end
+
+  def file_links(file_name)
+    {}
   end
 end
