@@ -19,6 +19,7 @@ class IncludeToComponentResolver
 
   def component_for_include(include)
     return '' unless source_files.key?(include)
+
     @component_include_map_cache[include] = component_for_include_private(include) unless @component_include_map_cache.key?(include)
     @component_include_map_cache[include]
   end
@@ -35,6 +36,7 @@ class IncludeToComponentResolver
     header_file = source_files[include]
     implementation_files = implementation_files(header_file)
     return header_file.parent_component if implementation_files.empty?
+
     implementation_files[0].parent_component
   end
 

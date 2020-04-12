@@ -25,6 +25,7 @@ class BidirectionalHash
 
   def fetch_from(hash, key)
     return nil unless hash.key?(key)
+
     v = hash[key]
     v.length == 1 ? v.first : v.dup
   end

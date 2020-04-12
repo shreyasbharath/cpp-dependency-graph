@@ -11,7 +11,7 @@ class DirTree
   attr_reader :tree
 
   def initialize(path)
-    @tree ||= File.directory?(path) ? parse_dirs(path) : {}
+    @tree = File.directory?(path) ? parse_dirs(path) : {}
   end
 
   private
@@ -22,9 +22,12 @@ class DirTree
     # TODO: Use Dir.map.compact|filter instead here
     Dir.foreach(path) do |entry|
       next if ['..', '.'].include?(entry)
+
       full_path = File.join(path, entry)
       next unless File.directory?(full_path)
+
       next unless source_files_present?(full_path)
+
       data[:children] << parse_dirs(full_path, entry)
     end
     data

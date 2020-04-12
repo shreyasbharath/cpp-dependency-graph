@@ -21,6 +21,7 @@ class Project
 
   def source_component(name)
     return SourceComponent.new('NULL') unless source_components.key?(name)
+
     source_components[name]
   end
 
@@ -65,5 +66,4 @@ class Project
     end.to_h
     components.delete_if { |_, v| v.source_files.size.zero? }
   end
-
 end
