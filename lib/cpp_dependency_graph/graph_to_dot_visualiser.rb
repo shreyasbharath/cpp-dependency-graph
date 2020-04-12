@@ -5,7 +5,7 @@ require 'ruby-graphviz'
 # Outputs a `dot` language representation of a dependency graph
 class GraphToDotVisualiser
   def generate(deps, file)
-    @g = GraphViz::new('dependency_graph')
+    @g = GraphViz.new('dependency_graph')
     nodes = create_nodes(deps)
     connect_nodes(deps, nodes)
     File.write(file, @g.to_dot)
@@ -22,7 +22,7 @@ class GraphToDotVisualiser
   end
 
   def create_node(name)
-    node = @g.add_node(name, :shape => "box3d")
+    node = @g.add_node(name, :shape => 'box3d')
     node
   end
 
@@ -30,7 +30,7 @@ class GraphToDotVisualiser
     deps.each do |source, links|
       links.each do |link|
         if link.cyclic?
-          @g.add_edges(source, link.target, :color => "red")
+          @g.add_edges(source, link.target, :color => 'red')
         else
           @g.add_edges(source, link.target)
         end
