@@ -57,7 +57,6 @@ module CppDependencyGraph
   def generate_enclosure_diagram(project_dir, output_file)
     dir_tree = DirTree.new(project_dir)
     tree = dir_tree.tree
-    puts tree
     CirclePackingVisualiser.new.generate(tree, output_file)
   end
 
@@ -76,6 +75,14 @@ module CppDependencyGraph
       GraphToHtmlVisualiser.new.generate(deps, file)
     when "json"
       File.write(file, JSON.pretty_generate(deps))
+    end
+  end
+
+  def list_components(project_dir)
+    logger.info "Resolving source directories in project..."
+    project = Project.new(project_dir)
+    project.source_components.each do |name, instance|
+      logger.info "Component: #{name}, path: #{instance.path}"
     end
   end
 end

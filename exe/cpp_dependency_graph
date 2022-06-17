@@ -44,6 +44,7 @@ doc = <<DOCOPT
     cpp_dependency_graph visualise_project_includes --root_dir <argument> [--output_file <file>] [--output_format <format>]
     cpp_dependency_graph visualise_components --root_dir <argument> [--output_file <file>] [--output_format <format>]
     cpp_dependency_graph visualise_cyclic_deps --root_dir <argument> [--component <component>] [--output_file <file>] [--output_format <format>]
+    cpp_dependency_graph list_components --root_dir <argument>
     cpp_dependency_graph -h | --help | -v | --version
 
   Options:
@@ -85,6 +86,8 @@ begin
     generate_enclosure_diagram(project_dir, args['--output_file'])
   elsif args['visualise_cyclic_deps']
     generate_cyclic_dependencies(project_dir, args['--output_format'], args['--output_file'])
+  elsif args['list_components']
+    list_components(project_dir)
   end
 rescue Docopt::Exit => e
   puts e.message
