@@ -1,21 +1,28 @@
 # frozen_string_literal: true
 
-require_relative 'cpp_dependency_graph/circle_packing_visualiser'
-require_relative 'cpp_dependency_graph/component_dependency_graph'
-require_relative 'cpp_dependency_graph/dir_tree'
-require_relative 'cpp_dependency_graph/graph_to_html_visualiser'
-require_relative 'cpp_dependency_graph/graph_to_svg_visualiser'
-require_relative 'cpp_dependency_graph/include_component_dependency_graph'
-require_relative 'cpp_dependency_graph/include_file_dependency_graph'
-require_relative 'cpp_dependency_graph/project'
-require_relative 'cpp_dependency_graph/version'
+require_relative "cpp_dependency_graph/circle_packing_visualiser"
+require_relative "cpp_dependency_graph/component_dependency_graph"
+require_relative "cpp_dependency_graph/dir_tree"
+require_relative "cpp_dependency_graph/graph_to_html_visualiser"
+require_relative "cpp_dependency_graph/graph_to_svg_visualiser"
+require_relative "cpp_dependency_graph/include_component_dependency_graph"
+require_relative "cpp_dependency_graph/include_file_dependency_graph"
+require_relative "cpp_dependency_graph/project"
+require_relative "cpp_dependency_graph/version"
+require_relative "cpp_dependency_graph/logging"
 
 # Generates dependency graphs of a project in various output forms
 module CppDependencyGraph
+  include Logging
+
   def generate_project_graph(project_dir, format, output_file)
+    logger.info "Resolving source directories in project..."
     project = Project.new(project_dir)
+    logger.info "Resolving dependencies between components..."
     graph = ComponentDependencyGraph.new(project)
+    logger.info "Generating graph..."
     deps = graph.all_links
+    logger.info "Generating visualisation..."
     generate_visualisation(deps, format, output_file)
   end
 
@@ -63,11 +70,11 @@ module CppDependencyGraph
 
   def generate_visualisation(deps, format, file)
     case format
-    when 'svg'
+    when "svg"
       GraphToSvgVisualiser.new.generate(deps, file)
-    when 'html'
+    when "html"
       GraphToHtmlVisualiser.new.generate(deps, file)
-    when 'json'
+    when "json"
       File.write(file, JSON.pretty_generate(deps))
     end
   end

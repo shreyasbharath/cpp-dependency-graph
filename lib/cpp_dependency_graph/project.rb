@@ -5,10 +5,12 @@ require 'find'
 require_relative 'directory_parser'
 require_relative 'include_to_component_resolver'
 require_relative 'source_component'
+require_relative 'logging'
 
 # Parses all components of a project
 class Project
   include DirectoryParser
+  include Logging
 
   def initialize(path)
     @path = path
@@ -61,6 +63,7 @@ class Project
     # TODO: Dealing with source components with same dir name?
     dirs = fetch_all_dirs(@path)
     components = dirs.map do |dir|
+      logger.debug "Parsing #{dir}"
       c = SourceComponent.new(dir)
       [c.name, c]
     end.to_h

@@ -25,20 +25,20 @@ Gem::Specification.new do |s|
   s.executables = s.files.grep(%r{^exe/}) { |f| File.basename(f) }
   s.require_paths = ['lib']
 
-  s.required_ruby_version = Gem::Requirement.new('>= 2.7.0')
-  s.rubygems_version = '3.1.2'
+  s.required_ruby_version = Gem::Requirement.new('>= 3.1.0')
+  s.rubygems_version = '3.3.4'
 
-  s.add_runtime_dependency 'docopt', '~> 0.6'
-  s.add_runtime_dependency 'json', '~> 2.3.0'
-  s.add_runtime_dependency 'ruby-graphviz', '~> 1.2'
+  s.add_runtime_dependency 'docopt'
+  s.add_runtime_dependency 'json'
+  s.add_runtime_dependency 'ruby-graphviz'
 
-  s.add_development_dependency 'bundler', '~> 2.1'
-  s.add_development_dependency 'debase', '~> 0.2'
-  s.add_development_dependency 'rake', '~> 13.0'
-  s.add_development_dependency 'rspec', '~> 3.9'
-  s.add_development_dependency 'rubocop', '~> 0.81'
-  s.add_development_dependency 'ruby-debug-ide', '~> 0.7'
-  s.add_development_dependency 'ruby-prof', '~> 0.18'
-  s.add_development_dependency 'simplecov', '~> 0.18'
-  s.add_development_dependency 'simplecov-console', '~> 0.4'
+  s.add_development_dependency 'bundler'
+  s.add_development_dependency 'rake'
+  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'rubocop'
+  s.add_development_dependency 'rufo'
+  s.add_development_dependency 'ruby-debug-ide'
+  s.add_development_dependency 'ruby-prof'
+  s.add_development_dependency 'simplecov'
+  s.add_development_dependency 'simplecov-console'
 end
