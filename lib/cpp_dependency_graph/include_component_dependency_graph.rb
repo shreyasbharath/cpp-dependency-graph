@@ -23,7 +23,6 @@ class IncludeComponentDependencyGraph
 
   def links(component_name)
     component = @project.source_component(component_name)
-    p component
     source_files = component.source_files
     external_includes = @project.external_includes(component)
     source_files.map do |file|

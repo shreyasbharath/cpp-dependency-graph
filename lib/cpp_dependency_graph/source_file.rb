@@ -34,6 +34,10 @@ class SourceFile
     @loc ||= file_contents.lines.count
   end
 
+  def exists?
+    File.exist?(path)
+  end
+
   private
 
   def all_includes

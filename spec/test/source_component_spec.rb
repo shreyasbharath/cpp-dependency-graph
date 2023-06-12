@@ -3,6 +3,16 @@
 require 'cpp_dependency_graph/source_component'
 
 RSpec.describe SourceComponent do
+  it 'exists? returns true for a valid component' do
+    component = SourceComponent.new('spec/test/example_project/Engine')
+    expect(component.exists?).to be true
+  end
+
+  it 'exists? returns false for a valid component' do
+    component = SourceComponent.new('spec/test/example_project/Engine2')
+    expect(component.exists?).to be false
+  end
+
   it 'has a name attribute that matches the directory' do
     component = SourceComponent.new('spec/test/example_project/Engine')
     expect(component.name).to eq('Engine')

@@ -32,4 +32,14 @@ RSpec.describe SourceFile do
     source_file = SourceFile.new('spec/test/example_project/Engine/Engine.cpp')
     expect(source_file.loc).to be > 0
   end
+
+  it 'exists? returns true for a file that exists' do
+    source_file = SourceFile.new('spec/test/example_project/Engine/Engine.cpp')
+    expect(source_file.exists?).to be true
+  end
+
+  it 'exists? returns false for a file that does not exist' do
+    source_file = SourceFile.new('spec/test/example_project/Engine/Engine2.cpp')
+    expect(source_file.exists?).to be false
+  end
 end
