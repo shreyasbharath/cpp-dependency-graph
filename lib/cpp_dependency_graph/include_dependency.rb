@@ -2,10 +2,11 @@
 
 # Represents a #include in a source file
 class IncludeDependency
-  def initialize(project_root_dir, raw_include)
-    @project_root_dir = project_root_dir
+  def initialize(raw_include)
     @raw_include = raw_include
-    @dir_name = Pathname.new(@raw_include).dirname
+    p = Pathname.new(@raw_include)
+    @dir_name = p.dirname
+    @basename = p.basename.to_s
     @absolute_include = @dir_name == Pathname.new('.')
   end
 
@@ -23,8 +24,5 @@ class IncludeDependency
     ''
   end
 
-  def exists?
-    full_path = File.join(@project_root_dir, @raw_include)
-    File.exist?(full_path)
-  end
+  attr_reader :basename
 end

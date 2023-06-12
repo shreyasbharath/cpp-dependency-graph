@@ -28,9 +28,11 @@ RSpec.describe SourceComponent do
     expect(source_file_names).to contain_exactly('Engine.cpp', 'Engine.h', 'OldEngine.h')
   end
 
-  it 'has an includes attribute' do
+  it 'outputs the correct includes for component' do
     component = SourceComponent.new('spec/test/example_project/Engine')
-    expect(component.includes).to contain_exactly('framework.h', 'Display.h', 'DA.h', 'Engine.h')
+    expect(component.includes).to contain_exactly(an_object_having_attributes(basename: 'framework.h'),
+                                                  an_object_having_attributes(basename: 'Display.h'), an_object_having_attributes(basename: 'DA.h'),
+                                                  an_object_having_attributes(basename: 'Engine.h'))
   end
 
   it 'has a loc (lines of code) attribute' do
