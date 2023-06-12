@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
+require 'pathname'
+
 require_relative 'config'
+require_relative 'include_dependency'
 require_relative 'directory_parser'
 require_relative 'source_file'
 
@@ -24,11 +27,15 @@ class SourceComponent
   end
 
   def includes
-    @includes ||= source_files.flat_map(&:includes).uniq.map { |include| File.basename(include) }
+    @includes ||= source_files.flat_map(&:includes).uniq.map { |f| IncludeDependency.new(f) }.uniq
   end
 
   def loc
     @loc ||= source_files.inject(0) { |total_loc, file| total_loc + file.loc }
+  end
+
+  def exists?
+    File.exist?(@path)
   end
 
   private

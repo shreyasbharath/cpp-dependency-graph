@@ -37,7 +37,10 @@ class Project
 
   def dependencies(component)
     # TODO: This is repeating the same work twice! component_for_include is called when calling external_includes
-    external_includes(component).map { |include| @include_resolver.component_for_include(include) }.reject(&:empty?).uniq
+    external_includes_component = external_includes(component)
+    external_includes_component.map do |include|
+      @include_resolver.component_for_include(include)
+    end.reject(&:empty?).uniq
   end
 
   def external_includes(component)
