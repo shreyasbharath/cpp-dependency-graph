@@ -27,7 +27,7 @@ class SourceComponent
   end
 
   def includes
-    @includes ||= source_files.flat_map(&:includes).uniq.map { |f| IncludeDependency.new(f) }
+    @includes ||= source_files.flat_map(&:includes).uniq.map { |f| IncludeDependency.new(f) }.uniq
   end
 
   def loc

@@ -5,75 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch index.html",
-      "type": "chrome",
+      "type": "rdbg",
+      "name": "Rspec",
       "request": "launch",
-      "breakOnLoad": true,
-      "sourceMapPathOverrides": {
-        "webRoot": "${workspaceRoot}"
-      },
-      "file": "${workspaceRoot}/index.html"
-    },
-    {
-      "name": "Debug Local File",
-      "type": "Ruby",
-      "request": "launch",
-      "cwd": "${workspaceRoot}",
-      "program": "${workspaceRoot}/exe/cpp_dependency_graph",
-      "useBundler": true,
-      "pathToBundler": "C:/tools/ruby25/bin/bundle.bat",
-      "pathToRDebugIDE": "C:/tools/ruby25/bin/rdebug-ide.bat",
-      "showDebuggerOutput": true,
-      "args": ["visualise_components", "-r", "../TileDB"]
-    },
-    {
-      "name": "Listen for rdebug-ide",
-      "type": "Ruby",
-      "request": "attach",
-      "cwd": "${workspaceRoot}",
-      "remoteHost": "127.0.0.1",
-      "remotePort": "1234",
-      "remoteWorkspaceRoot": "${workspaceRoot}"
-    },
-    {
-      "name": "Rails server",
-      "type": "Ruby",
-      "request": "launch",
-      "cwd": "${workspaceRoot}",
-      "program": "${workspaceRoot}/bin/rails",
-      "args": [
-        "server"
-      ]
-    },
-    {
-      "name": "RSpec - all",
-      "type": "Ruby",
-      "request": "launch",
-      "cwd": "${workspaceRoot}",
-      "program": "C:/tools/ruby25/bin/rspec",
-      "args": [
-        "-I",
-        "${workspaceRoot}"
-      ]
-    },
-    {
-      "name": "RSpec - active spec file only",
-      "type": "Ruby",
-      "request": "launch",
-      "cwd": "${workspaceRoot}",
-      "program": "C:/tools/ruby25/bin/rspec",
-      "args": [
-        "-I",
-        "${workspaceRoot}",
-        "${file}"
-      ]
-    },
-    {
-      "name": "Cucumber",
-      "type": "Ruby",
-      "request": "launch",
-      "cwd": "${workspaceRoot}",
-      "program": "${workspaceRoot}/bin/cucumber"
+      "command": "bundle exec rspec",
+      "script": "${file}:${lineNumber}",
+      "args": [],
+      "askParameters": false
     }
   ]
 }

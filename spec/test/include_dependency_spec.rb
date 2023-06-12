@@ -29,4 +29,10 @@ RSpec.describe IncludeDependency do
     i = IncludeDependency.new('Engine/Engine.h')
     expect(i.basename).to eq('Engine.h')
   end
+
+  it 'compares correctly against other instances' do
+    i1 = IncludeDependency.new('Engine/Engine.h')
+    i2 = IncludeDependency.new('Engine/Engine.h')
+    expect(i1).to eq(i2)
+  end
 end

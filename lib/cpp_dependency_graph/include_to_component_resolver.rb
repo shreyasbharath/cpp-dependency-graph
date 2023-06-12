@@ -18,9 +18,12 @@ class IncludeToComponentResolver
   end
 
   def component_for_include(include)
-    return '' unless source_files.key?(include)
+    return '' unless source_files.key?(include.basename)
 
-    @component_include_map_cache[include] = component_for_include_private(include) unless @component_include_map_cache.key?(include)
+    component = component_for_include_private(include.basename) unless @component_include_map_cache.key?(include.basename)
+    return '' if !include.component.empty? and include.component != component
+
+    @component_include_map_cache[include] = component
     @component_include_map_cache[include]
   end
 

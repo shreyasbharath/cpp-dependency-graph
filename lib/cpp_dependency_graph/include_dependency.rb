@@ -24,5 +24,14 @@ class IncludeDependency
     ''
   end
 
-  attr_reader :basename
+  def ==(other)
+    raw_include == other.raw_include
+  end
+  alias eql? ==
+
+  def hash
+    [self.class, @raw_include].hash
+  end
+
+  attr_reader :basename, :raw_include
 end
